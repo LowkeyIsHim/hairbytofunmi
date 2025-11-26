@@ -1,0 +1,22 @@
+<!-- public/hairbytofunmi-logo.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="76" viewBox="0 0 360 76" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#E6AABF"/>
+      <stop offset="1" stop-color="#B8738B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- rounded square monogram -->
+  <rect x="6" y="6" width="64" height="64" rx="16" fill="url(#g)"/>
+  <g transform="translate(18,20)" fill="#0b0b0b" font-family="Poppins, sans-serif" font-weight="700">
+    <text x="4" y="34" font-size="28">H</text>
+  </g>
+
+  <!-- wordmark -->
+  <g transform="translate(96,20)" font-family="Poppins, sans-serif">
+    <text x="0" y="20" font-size="22" fill="#F8F4F6" font-weight="700">Hairby</text>
+    <text x="88" y="20" font-size="22" fill="#E6AABF" font-weight="700">tofunmi</text>
+    <text x="0" y="44" font-size="12" fill="#b9a1a9" font-weight="500">Luxury Hair Artistry</text>
+  </g>
+</svg>
