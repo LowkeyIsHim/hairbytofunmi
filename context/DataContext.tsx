@@ -1,3 +1,5 @@
+// file: context/DataContext.tsx
+
 "use client";
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { HairStyle, INITIAL_STYLES, CONTACT_INFO } from '@/lib/constants';
@@ -16,14 +18,18 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
+  // Use a state that is safe for server rendering (empty array)
   const [styles, setStyles] = useState<HairStyle[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  // Initialize isMounted to false
   const [isMounted, setIsMounted] = useState(false);
   const contact = CONTACT_INFO;
 
   useEffect(() => {
-    setIsMounted(true);
-    // Load styles from local storage or use initial data
+    // This code runs ONLY on the client.
+    
+    // 1. Load styles from local storage or use initial data
     const savedStyles = localStorage.getItem('hbt_styles');
     if (savedStyles) {
       setStyles(JSON.parse(savedStyles));
@@ -31,12 +37,16 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       setStyles(INITIAL_STYLES);
     }
 
-    // Check auth status
+    // 2. Check auth status
     const auth = localStorage.getItem('hbt_auth');
     if (auth === 'true') setIsAuthenticated(true);
+    
+    // 3. Mark as mounted after loading client-side data
+    setIsMounted(true);
   }, []);
 
   useEffect(() => {
+    // Only update localStorage if the component has mounted
     if (isMounted) {
       localStorage.setItem('hbt_styles', JSON.stringify(styles));
     }
@@ -56,7 +66,12 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateStyle = (updatedStyle: HairStyle) => {
-    setStyles(styles.map(s => s.id === updatedStyle.id ? updatedStyle : s));
+    // Ensure the price is treated as a number during updates
+    const numericUpdatedStyle = {
+        ...updatedStyle,
+        price: Number(updatedStyle.price)
+    };
+    setStyles(styles.map(s => s.id === updatedStyle.id ? numericUpdatedStyle : s));
   };
 
   // Mock Authentication (Admin: tofunmi, Pass: Tofunmi2025!)
@@ -74,8 +89,16 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem('hbt_auth');
   };
 
-  // Prevent hydration errors
-  if (!isMounted) return <div className="min-h-screen bg-secondary"></div>; 
+  // 🐛 FIX: When not mounted (i.e., server rendering/hydration phase), 
+  // return a simple loading placeholder instead of letting the context consume its children.
+  // This prevents the TypeError.
+  if (!isMounted) {
+     return (
+        <div className="min-h-screen flex items-center justify-center bg-secondary">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+    );
+  } 
 
   const contextValue = useMemo(() => ({
     styles, contact, addStyle, deleteStyle, updateStyle, isAuthenticated, login, logout
