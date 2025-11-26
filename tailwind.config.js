@@ -8,18 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'deep-violet': '#5F4B8B', // Primary Accent
-        'soft-blush': '#F7D1BA', // Secondary Accent
-        'cream': '#FAFAFA', // Background
-        'dark-text': '#333333',
-        'subtle-gray': '#E5E7EB',
+        'deep-violet': '#4A148C', // Deep, mature purple
+        'rose-gold': '#B76E79',   // Elegant, warm gold/rose
+        'subtle-gray': '#EAEAEA',
+        'off-white': '#FDFDFD',
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'serif'],
-        sans: ['Inter', 'sans-serif'],
+        sans: ['"Inter"', 'sans-serif'],
+        serif: ['"Playfair Display"', 'serif'], // Elegant serif for headers
       },
       boxShadow: {
-        'premium': '0 4px 10px rgba(95, 75, 139, 0.1)', // Subtle shadow
+        'premium': '0 10px 30px rgba(74, 20, 140, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)',
       },
     },
   },
