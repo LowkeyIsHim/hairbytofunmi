@@ -1,33 +1,19 @@
-import { createAdminClient } from '@/lib/supabase';
+import { createAdminClient, createBrowserClient } from '@/lib/supabase'; // NOTE: Added createBrowserClient import for the client component
 import { cookies } from 'next/headers';
 import { getSettings } from '@/lib/supabase';
-import AdminSettingsForm from './AdminSettingsForm';
+// REMOVED: import AdminSettingsForm from './AdminSettingsForm'; // <--- CAUSE OF THE ERROR
 import { redirect } from 'next/navigation';
+import { useState } from 'react'; // NOTE: Added useState import for the client component
+// Assuming Input and Button are imported from your components directory
+import Input from '@/components/ui/Input'; 
+import Button from '@/components/ui/Button'; 
 
 export const metadata = {
   title: 'Settings | HairByTofunmi Admin',
   robots: 'noindex, nofollow',
 };
 
-// Client-side form to handle state and submission
-async function AdminSettingsFormWrapper() {
-  const cookieStore = cookies();
-  const supabase = createAdminClient(cookieStore);
-
-  // Re-check authentication status (though Layout also does this)
-  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-  if (sessionError || !session) {
-    redirect('/admin/login');
-  }
-
-  // Fetch current settings for form
-  const settings = await getSettings();
-
-  return <AdminSettingsForm initialData={settings} supabase={supabase} />;
-}
-
-
-// Client-side form component within the server page
+// Client-side form component within the server page (This is the definition)
 const AdminSettingsForm = ({ initialData }) => {
   'use client';
   const [formData, setFormData] = useState(initialData);
@@ -41,6 +27,7 @@ const AdminSettingsForm = ({ initialData }) => {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
 
+  // ... (rest of the component logic is unchanged)
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -148,5 +135,23 @@ const AdminSettingsForm = ({ initialData }) => {
     </div>
   );
 };
+
+
+// Server component wrapper (Function is unchanged)
+async function AdminSettingsFormWrapper() {
+  const cookieStore = cookies();
+  const supabase = createAdminClient(cookieStore);
+
+  // Re-check authentication status (though Layout also does this)
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  if (sessionError || !session) {
+    redirect('/admin/login');
+  }
+
+  // Fetch current settings for form
+  const settings = await getSettings();
+
+  return <AdminSettingsForm initialData={settings} supabase={supabase} />;
+}
 
 export default AdminSettingsFormWrapper;
