@@ -1,4 +1,4 @@
-import { HairStyle } from '@/lib/initialData';
+import { HairStyle } from '@/lib/constants';
 import { useData } from '@/context/DataContext';
 import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -12,12 +12,12 @@ export default function StyleCard({ style }: { style: HairStyle }) {
     minimumFractionDigits: 0
   }).format(style.price);
 
-  const whatsappMessage = encodeURIComponent(`Hello Tofunmi, I would love to book an appointment for the ${style.name} style. What is your next availability?`);
+  const whatsappMessage = encodeURIComponent(`Hello Tofunmi, I am interested in booking the ${style.name} style (Price: ${formattedPrice}). What is your next availability?`);
   const whatsappLink = `https://wa.me/${contact.whatsapp}?text=${whatsappMessage}`;
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 50 }} 
+      initial={{ opacity: 0, y: 30 }} 
       whileInView={{ opacity: 1, y: 0 }} 
       transition={{ duration: 0.5, ease: "easeOut" }}
       viewport={{ once: true, amount: 0.1 }}
@@ -28,14 +28,13 @@ export default function StyleCard({ style }: { style: HairStyle }) {
           src={style.image} 
           alt={style.name} 
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          // Placeholder fallback
           onError={(e) => {
             (e.target as HTMLImageElement).src = "https://placehold.co/600x800/CFB998/1C1917?text=HairByTofunmi";
           }}
         />
-        {style.recommended && (
+        {style.featured && (
           <div className="absolute top-3 left-3 bg-primary text-dark text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
-            Recommended ✨
+            Featured ✨
           </div>
         )}
       </div>
@@ -49,10 +48,10 @@ export default function StyleCard({ style }: { style: HairStyle }) {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full bg-dark text-white py-3 rounded-lg hover:bg-primary hover:text-dark transition-colors duration-300 font-medium shadow-md hover:shadow-lg"
+            className="flex items-center justify-center gap-2 w-full bg-dark text-white py-3 rounded-lg hover:bg-primary hover:text-dark transition-colors duration-300 font-medium shadow-md"
           >
             <MessageCircle size={18} />
-            <span>Book this Style via WhatsApp</span>
+            <span>Book {style.name}</span>
           </a>
         </div>
       </div>
