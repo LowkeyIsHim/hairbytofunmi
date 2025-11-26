@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link'; 
 import { useData } from "@/context/DataContext";
 import StyleCard from "@/components/StyleCard";
 import { motion } from "framer-motion";
