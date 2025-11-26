@@ -8,4 +8,8 @@
     --color-secondary: 253 242 248; /* FDF2F8 */
     --color-dark: 28 25 23; /* 1C1917 */
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
 }
