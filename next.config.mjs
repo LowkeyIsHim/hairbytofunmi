@@ -1,34 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Use app directory
-  experimental: {
-    appDir: true,
-    serverActions: true,
-  },
-  // Configure image domains for the Image component security
+  // Allow images from the URLs provided by the admin (Supabase CDN and others)
   images: {
-    // Since the admin uses external URLs, we must allow image sources.
-    // picsum is included for the seed data/placeholders.
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'picsum.photos',
+        hostname: '**', // Allow all external image URLs for flexibility
       },
-      // IMPORTANT: Add the hostname(s) of where the stylist will host their images (e.g., Google Photos, Imgur, etc.)
-      // Example: 
-      // {
-      //   protocol: 'https',
-      //   hostname: 'my-photo-storage.com',
-      // },
       {
-        protocol: 'https',
-        hostname: '**', // Broadly allow for easy administration, but secure this if possible
-      }
+        protocol: 'http',
+        hostname: '**', // Allow http for local testing if needed
+      },
     ],
-  },
-  // Ensure Tailwind CSS is configured
-  compiler: {
-    styledComponents: false,
   },
 };
 
