@@ -1,10 +1,11 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { HairStyle, INITIAL_STYLES } from '@/lib/initialData';
+import { HairStyle, INITIAL_STYLES, CONTACT_INFO } from '@/lib/initialData';
 
 interface DataContextType {
   styles: HairStyle[];
-  addStyle: (style: HairStyle) => void;
+  contact: typeof CONTACT_INFO;
+  addStyle: (style: Omit<HairStyle, 'id'>) => void;
   deleteStyle: (id: string) => void;
   updateStyle: (style: HairStyle) => void;
   isAuthenticated: boolean;
@@ -18,17 +19,19 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [styles, setStyles] = useState<HairStyle[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const contact = CONTACT_INFO; // For simplicity, contact info is static in this mock
 
   useEffect(() => {
     setIsMounted(true);
-    // Load from local storage or use initial data
-    const saved = localStorage.getItem('hbt_styles');
-    if (saved) {
-      setStyles(JSON.parse(saved));
+    // Load styles from local storage or use initial data
+    const savedStyles = localStorage.getItem('hbt_styles');
+    if (savedStyles) {
+      setStyles(JSON.parse(savedStyles));
     } else {
       setStyles(INITIAL_STYLES);
     }
 
+    // Check auth status
     const auth = localStorage.getItem('hbt_auth');
     if (auth === 'true') setIsAuthenticated(true);
   }, []);
@@ -39,8 +42,9 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [styles, isMounted]);
 
-  const addStyle = (style: HairStyle) => {
-    setStyles([...styles, style]);
+  const addStyle = (style: Omit<HairStyle, 'id'>) => {
+    const newStyle: HairStyle = { ...style, id: Date.now().toString() };
+    setStyles([...styles, newStyle]);
   };
 
   const deleteStyle = (id: string) => {
@@ -51,9 +55,10 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     setStyles(styles.map(s => s.id === updatedStyle.id ? updatedStyle : s));
   };
 
+  // Mock Authentication
   const login = (password: string) => {
-    // Simple hardcoded password for demo purposes
-    if (password === 'tofunmi123') {
+    // Simple hardcoded password for demo purposes (Admin: tofunmi, Pass: Tofunmi2025!)
+    if (password === 'Tofunmi2025!') {
       setIsAuthenticated(true);
       localStorage.setItem('hbt_auth', 'true');
       return true;
@@ -66,10 +71,11 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem('hbt_auth');
   };
 
-  if (!isMounted) return null; // Prevent hydration mismatch
+  // Must check mount state to prevent hydration errors when accessing localStorage
+  if (!isMounted) return <div className="min-h-screen bg-secondary"></div>; 
 
   return (
-    <DataContext.Provider value={{ styles, addStyle, deleteStyle, updateStyle, isAuthenticated, login, logout }}>
+    <DataContext.Provider value={{ styles, contact, addStyle, deleteStyle, updateStyle, isAuthenticated, login, logout }}>
       {children}
     </DataContext.Provider>
   );
