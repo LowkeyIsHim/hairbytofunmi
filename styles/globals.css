@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom global styles */
+html, body, #__next {
+  height: 100%;
+}
+body {
+  font-family: theme('fontFamily.sans');
+  background: linear-gradient(180deg, #fff 0%, #fbfbfb 100%);
+  color: #1f2937;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle card */
+.card {
+  @apply bg-white rounded-2xl shadow-sm;
+}
+
+/* Focus states accessible */
+:focus {
+  outline: 3px solid rgba(223,93,152,0.18);
+  outline-offset: 2px;
+}
