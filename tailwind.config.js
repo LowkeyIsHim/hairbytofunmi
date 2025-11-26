@@ -1,26 +1,34 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}"
   ],
   theme: {
     extend: {
       colors: {
-        'deep-violet': '#4A148C', // Deep, mature purple
-        'rose-gold': '#B76E79',   // Elegant, warm gold/rose
-        'subtle-gray': '#EAEAEA',
-        'off-white': '#FDFDFD',
+        brand: {
+          50: "#fff8fb",
+          100: "#fdeaf2",
+          200: "#f7cfe0",
+          300: "#f0b0cc",
+          400: "#ea84b2",
+          500: "#df5d98",
+          600: "#c2457f",
+          700: "#9b3561",
+          800: "#732443",
+          900: "#4b1529"
+        },
+        neutralSoft: {
+          50: "#fbfbfb",
+          100: "#f5f5f6",
+          200: "#ededee",
+          300: "#d9d7d8"
+        }
       },
       fontFamily: {
-        sans: ['"Inter"', 'sans-serif'],
-        serif: ['"Playfair Display"', 'serif'], // Elegant serif for headers
-      },
-      boxShadow: {
-        'premium': '0 10px 30px rgba(74, 20, 140, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)',
-      },
-    },
+        sans: ['Inter', 'ui-sans-serif', 'system-ui']
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 }
