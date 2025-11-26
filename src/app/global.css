@@ -2,49 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom elegant scrollbar for a premium look */
+/* Custom Scrollbar for a premium feel (Webkit browsers) */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
 }
-
-::-webkit-scrollbar-track {
-  background: #FFFBF5; /* cream-white */
-}
-
 ::-webkit-scrollbar-thumb {
-  background: #A399CC; /* muted-lavender */
-  border-radius: 4px;
+  background-color: #5F4B8B80; /* Semi-transparent Deep Violet */
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FAFAFA;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #3A2D5C; /* deep-violet */
+/* Base styles for a clean slate and custom font */
+body {
+  @apply bg-cream text-dark-text font-sans antialiased;
 }
 
-/* Base styles for a premium look */
-html {
-    scroll-behavior: smooth;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-playfair), serif;
-}
-
-/* Subtle fade in animation */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fadeInDown {
-  animation: fadeInDown 0.7s ease-out;
+h1, h2, h3, h4, h5 {
+  @apply font-serif text-deep-violet;
 }
