@@ -9,14 +9,15 @@
     "seed": "node supabase/seed.js"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "tailwindcss": "latest",
-    "postcss": "latest",
-    "autoprefixer": "latest",
-    "@supabase/supabase-js": "latest",
-    "clsx": "latest",
-    "@tailwindcss/postcss": "*"
-  }
+  "next": "latest",
+  "react": "latest",
+  "react-dom": "latest",
+  "tailwindcss": "latest",
+  "postcss": "latest",
+  "autoprefixer": "latest",
+  "@supabase/supabase-js": "latest",
+  "clsx": "latest"
+},
+"devDependencies": {
+  "@tailwindcss/postcss": "latest"
 }
