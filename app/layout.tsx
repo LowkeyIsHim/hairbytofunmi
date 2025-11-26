@@ -1,9 +1,10 @@
+// app/layout.tsx (The final, fixed code)
+
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { DataProvider } from "@/context/DataContext";
+// NOTE: We don't import Navbar, Footer, or DataProvider here anymore
+import LayoutWrapper from "@/components/LayoutWrapper"; // <-- Import the new wrapper
 
 // Elegant, sophisticated serif font for headings
 const playfair = Playfair_Display({ 
@@ -32,13 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${inter.variable} font-sans bg-secondary text-dark antialiased`}>
-        <DataProvider>
-          <Navbar />
-          <main className="min-h-screen pt-20">
-            {children}
-          </main>
-          <Footer />
-        </DataProvider>
+        {/* The entire application UI (which includes the context) is now nested here */}
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   );
