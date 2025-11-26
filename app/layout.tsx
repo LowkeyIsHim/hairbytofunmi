@@ -19,9 +19,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "HairByTofunmi | Premium Hair Stylist & Loc Specialist",
-  description: "Transforming hair dreams into reality with elegance and style. Specializing in braids, twists, and locs. Book your luxury styling appointment via WhatsApp.",
-  // Add favicon here if you had the file
+  title: "HairByTofunmi | Premium Styling & Protective Hair Care",
+  description: "Transforming hair dreams into reality with elegance, style, and care. Specializing in luxury braids, twists, and locs. Book your appointment via WhatsApp.",
+  keywords: ["HairByTofunmi", "braids", "locs", "twists", "stylist", "premium hair", "lagos stylist"],
 };
 
 export default function RootLayout({
