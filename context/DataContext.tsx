@@ -1,6 +1,6 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { HairStyle, INITIAL_STYLES, CONTACT_INFO } from '@/lib/initialData';
+import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
+import { HairStyle, INITIAL_STYLES, CONTACT_INFO } from '@/lib/constants';
 
 interface DataContextType {
   styles: HairStyle[];
@@ -19,7 +19,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [styles, setStyles] = useState<HairStyle[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const contact = CONTACT_INFO; // For simplicity, contact info is static in this mock
+  const contact = CONTACT_INFO;
 
   useEffect(() => {
     setIsMounted(true);
@@ -43,7 +43,11 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, [styles, isMounted]);
 
   const addStyle = (style: Omit<HairStyle, 'id'>) => {
-    const newStyle: HairStyle = { ...style, id: Date.now().toString() };
+    const newStyle: HairStyle = { 
+        ...style, 
+        id: Date.now().toString(), 
+        price: Number(style.price) // Ensure price is number
+    };
     setStyles([...styles, newStyle]);
   };
 
@@ -55,9 +59,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     setStyles(styles.map(s => s.id === updatedStyle.id ? updatedStyle : s));
   };
 
-  // Mock Authentication
+  // Mock Authentication (Admin: tofunmi, Pass: Tofunmi2025!)
   const login = (password: string) => {
-    // Simple hardcoded password for demo purposes (Admin: tofunmi, Pass: Tofunmi2025!)
     if (password === 'Tofunmi2025!') {
       setIsAuthenticated(true);
       localStorage.setItem('hbt_auth', 'true');
@@ -71,11 +74,15 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem('hbt_auth');
   };
 
-  // Must check mount state to prevent hydration errors when accessing localStorage
+  // Prevent hydration errors
   if (!isMounted) return <div className="min-h-screen bg-secondary"></div>; 
 
+  const contextValue = useMemo(() => ({
+    styles, contact, addStyle, deleteStyle, updateStyle, isAuthenticated, login, logout
+  }), [styles, contact, isAuthenticated]);
+
   return (
-    <DataContext.Provider value={{ styles, contact, addStyle, deleteStyle, updateStyle, isAuthenticated, login, logout }}>
+    <DataContext.Provider value={contextValue}>
       {children}
     </DataContext.Provider>
   );
