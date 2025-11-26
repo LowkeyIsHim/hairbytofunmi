@@ -8,19 +8,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'cream-white': '#FFFBF5', // Background
-        'muted-lavender': '#A399CC', // Primary CTA/Accents
-        'deep-violet': '#3A2D5C', // Text/Headers
-        'soft-gold': '#C8A35E', // Highlight/Border
-        'subtle-gray': '#EAEAEA',
+        'deep-violet': '#5F4B8B', // Primary Accent
+        'soft-blush': '#F7D1BA', // Secondary Accent
+        'cream': '#FAFAFA', // Background
+        'dark-text': '#333333',
+        'subtle-gray': '#E5E7EB',
       },
       fontFamily: {
-        sans: ['"Inter"', 'sans-serif'], // Modern, readable font
-        serif: ['"Playfair Display"', 'serif'], // Elegant display font
+        serif: ['"Playfair Display"', 'serif'],
+        sans: ['Inter', 'sans-serif'],
       },
       boxShadow: {
-        'premium': '0 10px 30px rgba(163, 153, 204, 0.2)', // Soft, elegant shadow
-      }
+        'premium': '0 4px 10px rgba(95, 75, 139, 0.1)', // Subtle shadow
+      },
     },
   },
   plugins: [],
