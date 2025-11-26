@@ -12,6 +12,7 @@ const config: Config = {
         primary: "#CFB998", // Gold Accent
         secondary: "#FDF2F8", // Soft Rose/Pastel Background
         dark: "#1C1917", // Rich Black Text/Buttons
+        light: "#FFFFFF",
       },
       fontFamily: {
         serif: ['var(--font-playfair)'], // Elegant Heading Font
