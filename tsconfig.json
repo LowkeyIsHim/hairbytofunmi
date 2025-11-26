@@ -1,14 +1,9 @@
 {
   "compilerOptions": {
-    /* ... other compiler options ... */
-    
-    // --- Add these two lines ---
-    "baseUrl": ".",
+    "baseUrl": ".", // Enables absolute path imports
     "paths": {
       "@/*": ["./*"]
     },
-    // ---------------------------
-
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
