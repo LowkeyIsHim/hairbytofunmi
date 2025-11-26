@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#CFB998", // Gold/Beige
-        secondary: "#FDF2F8", // Rose 50
-        dark: "#1C1917", // Stone 900
+        primary: "#CFB998", // Gold Accent
+        secondary: "#FDF2F8", // Soft Rose/Pastel Background
+        dark: "#1C1917", // Rich Black Text/Buttons
       },
       fontFamily: {
-        serif: ['var(--font-playfair)'],
-        sans: ['var(--font-inter)'],
+        serif: ['var(--font-playfair)'], // Elegant Heading Font
+        sans: ['var(--font-inter)'],     // Clean Body Font
       }
     },
   },
