@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Elegant Font Setup */
+  :root {
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    color: theme('colors.deepViolet');
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: theme('colors.text');
+    background-color: theme('colors.background');
+  }
+}
+
+@layer components {
+  /* Custom shadow based on theme */
+  .shadow-premium {
+    box-shadow: 0 10px 30px -10px rgba(93, 63, 211, 0.2);
+  }
+
+  /* Premium Card Styles */
+  .card-premium {
+    @apply bg-white rounded-xl shadow-premium overflow-hidden transition-all duration-300 ease-in-out;
+  }
+
+  /* Elegant Button Base */
+  .btn-base {
+    @apply font-semibold py-3 px-6 rounded-full transition-all duration-300 flex items-center justify-center;
+  }
+}
