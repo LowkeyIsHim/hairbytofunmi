@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 28, 25, 23;
-  --background-start-rgb: 253, 242, 248;
-  --background-end-rgb: 255, 255, 255;
+@layer base {
+  :root {
+    --color-primary: 207 185 152; /* CFB998 */
+    --color-secondary: 253 242 248; /* FDF2F8 */
+    --color-dark: 28 25 23; /* 1C1917 */
+  }
 }
