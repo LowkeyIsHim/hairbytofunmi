@@ -2,18 +2,17 @@
 import { useEffect, useState } from 'react';
 import { useData } from '@/context/DataContext';
 import { useRouter } from 'next/navigation';
-import { Trash2, Edit2, Plus, X, LogOut } from 'lucide-react';
-import { HairStyle } from '@/lib/initialData';
+import { Trash2, Edit2, Plus, X, LogOut, LayoutDashboard } from 'lucide-react';
+import { HairStyle } from '@/lib/constants';
 
 export default function AdminDashboard() {
-  const { isAuthenticated, styles, deleteStyle, updateStyle, addStyle, logout } = useData();
+  const { isAuthenticated, styles, deleteStyle, updateStyle, addStyle, logout, contact } = useData();
   const router = useRouter();
   const [isEditing, setIsEditing] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   
-  // Form State
   const [formData, setFormData] = useState<Partial<HairStyle>>({
-    name: '', price: 0, category: 'Braids', image: '', recommended: false
+    name: '', price: 0, category: 'Braids', image: '', featured: false
   });
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export default function AdminDashboard() {
 
     const styleToSave = { 
         ...formData, 
-        price: Number(formData.price), // Ensure price is number
+        price: Number(formData.price),
         image: formData.image || 'https://placehold.co/600x800/CFB998/1C1917?text=New+Style'
     } as HairStyle;
 
@@ -47,17 +46,23 @@ export default function AdminDashboard() {
   };
 
   const resetForm = () => {
-    setFormData({ name: '', price: 0, category: 'Braids', image: '', recommended: false });
+    setFormData({ name: '', price: 0, category: 'Braids', image: '', featured: false });
     setIsEditing(null);
     setShowForm(false);
   };
 
+  const totalStyles = styles.length;
+  const featuredCount = styles.filter(s => s.featured).length;
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="flex justify-between items-center mb-8 border-b border-primary/50 pb-4">
-        <div>
-          <h1 className="font-serif text-4xl text-dark">Stylist Dashboard</h1>
-          <p className="text-stone-500 mt-1">Manage styles, images, and pricing.</p>
+        <div className="flex items-center gap-3">
+            <LayoutDashboard size={32} className="text-primary"/>
+            <div>
+                <h1 className="font-serif text-4xl text-dark">Stylist Dashboard</h1>
+                <p className="text-stone-500 mt-1">Manage styles, images, and pricing for {contact.whatsapp}</p>
+            </div>
         </div>
         <button 
           onClick={logout} 
@@ -66,9 +71,25 @@ export default function AdminDashboard() {
             <LogOut size={16}/> Logout
         </button>
       </div>
+      
+      {/* Analytics Overview */}
+      <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="bg-white p-6 rounded-xl shadow-md border-l-4 border-primary">
+              <p className="text-stone-500 text-sm">Total Styles</p>
+              <h3 className="font-serif text-3xl font-bold text-dark mt-1">{totalStyles}</h3>
+          </div>
+          <div className="bg-white p-6 rounded-xl shadow-md border-l-4 border-primary">
+              <p className="text-stone-500 text-sm">Featured on Homepage</p>
+              <h3 className="font-serif text-3xl font-bold text-dark mt-1">{featuredCount} / 3</h3>
+          </div>
+          <div className="bg-white p-6 rounded-xl shadow-md border-l-4 border-primary">
+              <p className="text-stone-500 text-sm">Primary Contact</p>
+              <h3 className="font-serif text-3xl font-bold text-dark mt-1">WhatsApp</h3>
+          </div>
+      </div>
 
       <div className="flex justify-between items-center mb-8">
-        <h2 className="font-serif text-2xl">Style Inventory ({styles.length})</h2>
+        <h2 className="font-serif text-2xl">Style Inventory</h2>
         <button 
           onClick={() => setShowForm(true)}
           className="flex items-center gap-2 bg-dark text-white px-6 py-3 rounded-full font-bold hover:bg-primary hover:text-dark transition shadow-md"
@@ -133,12 +154,12 @@ export default function AdminDashboard() {
                <div className="flex items-center space-x-2">
                 <input 
                   type="checkbox"
-                  id="recommended"
-                  checked={formData.recommended || false}
-                  onChange={e => setFormData({...formData, recommended: e.target.checked})}
+                  id="featured"
+                  checked={formData.featured || false}
+                  onChange={e => setFormData({...formData, featured: e.target.checked})}
                   className="h-4 w-4 text-primary border-stone-300 rounded focus:ring-primary"
                 />
-                <label htmlFor="recommended" className="text-sm font-medium text-dark">Mark as Recommended Style (Homepage Highlight)</label>
+                <label htmlFor="featured" className="text-sm font-medium text-dark">Mark as Featured Style (Homepage Highlight)</label>
               </div>
               <button type="submit" className="w-full bg-dark text-white py-3 rounded-lg font-bold uppercase tracking-wider hover:bg-primary hover:text-dark transition shadow-md mt-6">
                 {isEditing ? 'Save Changes' : 'Add Style to Site'}
@@ -156,9 +177,8 @@ export default function AdminDashboard() {
               <tr>
                 <th className="p-4 font-medium text-stone-500">Image</th>
                 <th className="p-4 font-medium text-stone-500">Name</th>
-                <th className="p-4 font-medium text-stone-500">Category</th>
                 <th className="p-4 font-medium text-stone-500">Price (₦)</th>
-                <th className="p-4 font-medium text-stone-500">Rec.</th>
+                <th className="p-4 font-medium text-stone-500">Featured</th>
                 <th className="p-4 font-medium text-stone-500 text-right">Actions</th>
               </tr>
             </thead>
@@ -169,9 +189,8 @@ export default function AdminDashboard() {
                     <img src={style.image} alt={style.name} className="w-16 h-16 rounded object-cover bg-stone-200 shadow-sm" />
                   </td>
                   <td className="p-4 font-bold text-dark">{style.name}</td>
-                  <td className="p-4 text-sm text-stone-600">{style.category}</td>
                   <td className="p-4 font-bold text-primary">₦{style.price.toLocaleString()}</td>
-                   <td className="p-4">{style.recommended ? '✅' : '❌'}</td>
+                   <td className="p-4">{style.featured ? '✅' : '❌'}</td>
                   <td className="p-4 text-right space-x-2">
                     <button 
                       onClick={() => handleEdit(style)}
