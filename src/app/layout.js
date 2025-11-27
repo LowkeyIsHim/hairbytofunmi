@@ -23,23 +23,41 @@ export const metadata = {
   }
 };
 
+// ... existing imports ...
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${lato.variable} font-sans bg-white text-brand-dark`}>
-        <AuthContextProvider>
-          <Navbar />
-          <main className="min-h-screen pt-20">
-            {children}
-          </main>
-          <Footer />
-          <Toaster position="bottom-center" toastOptions={{
-            style: {
-              background: '#333',
-              color: '#fff',
-            }
-          }}/>
-        </AuthContextProvider>
+      {/* 💡 START OF EMBEDDED CSS FIX 💡 */}
+      <style global jsx>{`
+        /* Defining CSS Variables for Theming */
+        :root {
+          --foreground-rgb: 26, 26, 26;
+          --background-rgb: 247, 244, 240;
+        }
+        /* Dark Mode Overrides */
+        :root.dark {
+          --foreground-rgb: 247, 244, 240;
+          --background-rgb: 26, 26, 26;
+        }
+        body {
+          color: rgb(var(--foreground-rgb));
+          background: radial-gradient(at 0% 0%, #ffffff 0px, var(--background-rgb) 50%);
+          background-attachment: fixed;
+          transition: background-color 0.3s, color 0.3s;
+        }
+        /* Ensure the body font uses the configured Playfair Display */
+        body {
+            font-family: var(--font-sans);
+        }
+        /* NOTE: Tailwind classes like .btn-primary are still working via globals.css */
+      `}</style>
+      {/* 💡 END OF EMBEDDED CSS FIX 💡 */}
+      
+      <body className={`min-h-screen antialiased`}>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
