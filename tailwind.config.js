@@ -8,18 +8,17 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        // Using a more elegant, default serif/sans pairing
         serif: ['var(--font-playfair)', 'serif'],
         sans: ['var(--font-lato)', 'sans-serif'],
       },
       colors: {
         brand: {
-          50: '#fdf2f8', // Very light pink
-          100: '#fce7f3',
-          500: '#ec4899', // Pink accent
-          800: '#9d174d', // Dark pink
-          900: '#831843', // Deep styling
-          gold: '#d4af37', // Luxury Gold
-          dark: '#1c1917', // Charcoal
+          cream: '#FAF9F6', // Off-White/Cream Background
+          champagne: '#C5B487', // Muted Gold/Champagne Accent
+          mauve: '#A17A8A', // Deep Muted Mauve/Rose
+          dark: '#1e1b19', // Deep Charcoal for Text
+          accent: '#A17A8A', // Main brand color
         }
       }
     },
