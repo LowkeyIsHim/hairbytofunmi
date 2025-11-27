@@ -1,30 +1,75 @@
-/* src/app/globals.css (Restored Styles) */
+/* src/app/globals.css */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Defining CSS Variables for Theming */
+/* Defining CSS Variables for Theming - Use these in Tailwind classes like text-brand-dark */
+/* These are the variables from your layout.js previously, now in the CSS file */
 :root {
   --foreground-rgb: 26, 26, 26; /* brand-dark */
   --background-rgb: 247, 244, 240; /* brand-cream */
 }
-/* Dark Mode Overrides */
-:root.dark {
+
+/* Dark Mode Overrides - If you're implementing dark mode via 'class' */
+.dark { /* Tailwind's dark mode applies the 'dark' class to the html tag */
   --foreground-rgb: 247, 244, 240; /* brand-cream */
   --background-rgb: 26, 26, 26; /* brand-dark */
 }
 
 body {
+  /* Apply the body background and default text color from your CSS variables */
   color: rgb(var(--foreground-rgb));
-  /* Using the CSS variables now defined here */
-  background: radial-gradient(at 0% 0%, #ffffff 0px, var(--background-rgb) 50%);
+  background-color: rgb(var(--background-rgb)); /* Use background-color directly */
   background-attachment: fixed;
-  transition: background-color 0.3s, color 0.3s;
-  /* Setting default fonts using the CSS variables from layout.js */
-  font-family: var(--font-lato);
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Smooth transitions */
+  
+  /* Apply your default sans font (Lato) to the body */
+  font-family: var(--font-lato), sans-serif;
+  
+  /* Optional: Global link styling for a premium look */
+  a {
+    color: inherit; /* Inherit text color by default */
+    text-decoration: none;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px; /* Adjust as needed */
+      width: 0;
+      height: 1px; /* Line thickness */
+      background-color: theme('colors.brand.gold'); /* Use your gold color */
+      transition: width 0.3s ease-in-out;
+    }
+    &:hover::after {
+      width: 100%;
+    }
+  }
 }
 
+/* Apply the serif font (Playfair Display) to headings */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair);
+  font-family: var(--font-playfair), serif;
+}
+
+/* Additional utility classes or base styles */
+.container {
+  max-width: 1200px; /* Max width for content */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem; /* Default padding */
+  padding-right: 1.5rem;
+}
+
+/* Example: A premium card style */
+.card-premium {
+  @apply bg-white dark:bg-brand-dark p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out;
+}
+
+/* Ensure images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
