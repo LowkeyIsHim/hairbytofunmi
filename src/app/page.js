@@ -8,9 +8,9 @@ import Image from "next/image";
 
 // Use a placeholder for the actual style data if none is loaded yet
 const placeholderStyles = [
-    { id: 'p1', name: 'Signature Look', price: 9000, imageUrl: 'https://images.unsplash.com/photo-1621250325150-1c4b7b2521b4?q=80&w=1974&auto=format&fit=crop', featured: true },
-    { id: 'p2', name: 'Elegant Braids', price: 10000, imageUrl: 'https://images.unsplash.com/photo-1620956900220-4e082f50a8d6?q=80&w=1974&auto=format&fit=crop', featured: true },
-    { id: 'p3', name: 'Custom Twists', price: 8000, imageUrl: 'https://images.unsplash.com/photo-1620956900220-4e082f50a8d6?q=80&w=1974&auto=format&fit=crop', featured: true },
+    { id: 'p1', name: 'Butterfly Locs', price: 12000, imageUrl: 'https://files.catbox.moe/307vwv.jpeg', featured: true },
+    { id: 'p2', name: 'Knotless Braids', price: 7000, imageUrl: 'https://files.catbox.moe/751jcs.jpeg', featured: true },
+    { id: 'p3', name: 'French Curls Braid', price: 10000, imageUrl: 'https://files.catbox.moe/hegokr.jpeg', featured: true },
 ];
 
 export default function Home() {
