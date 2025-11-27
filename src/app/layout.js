@@ -1,10 +1,8 @@
-// src/app/layout.js (Refined)
-
 import { Playfair_Display, Lato } from "next/font/google";
-import "./globals.css"; // Your main stylesheet
+import "./globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
-import Navbar from "@/components/Navbar"; // Assuming Navbar is correctly imported
-import Footer from "@/components/Footer"; // Assuming Footer is correctly imported
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 
 const playfair = Playfair_Display({ 
@@ -28,17 +26,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body 
-        // Applying the font variables and a robust base class for min height
-        className={`min-h-screen antialiased ${playfair.variable} ${lato.variable}`}
-      >
+      <body className={`min-h-screen antialiased ${playfair.variable} ${lato.variable} flex flex-col`}>
         <AuthContextProvider>
           <Navbar />
-          {/* Main content area - flexible padding handled by individual pages/sections */}
-          <main className="flex-grow pt-[var(--navbar-height)]"> {/* Adjust pt- to match navbar height */}
+          {/* Added flex-grow and padding-top to compensate for the fixed Navbar height (defined in globals.css) */}
+          <main className="flex-grow pt-[var(--navbar-height)]"> 
             {children}
           </main>
           <Footer />
+          
           <Toaster 
             position="bottom-center" 
             toastOptions={{
