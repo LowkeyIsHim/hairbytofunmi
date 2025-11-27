@@ -8,17 +8,18 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        // Using a more elegant, default serif/sans pairing
-        serif: ['var(--font-playfair)', 'serif'],
-        sans: ['var(--font-lato)', 'sans-serif'],
+        // High-end serif for headlines (Think magazine titles)
+        serif: ['"Playfair Display"', 'serif'], 
+        // Clean, readable sans for body text
+        sans: ['"Lato"', 'sans-serif'], 
       },
       colors: {
         brand: {
-          cream: '#FAF9F6', // Off-White/Cream Background
-          champagne: '#C5B487', // Muted Gold/Champagne Accent
-          mauve: '#A17A8A', // Deep Muted Mauve/Rose
-          dark: '#1e1b19', // Deep Charcoal for Text
-          accent: '#A17A8A', // Main brand color
+          cream: '#F7F4F0', // Slightly richer, warmer off-white background
+          gold: '#997300',    // Deeper, more luxurious Gold for accents
+          mauve: '#7F5E70',   // Richer, deeper Mauve/Plum for elegance
+          dark: '#1A1A1A',  // Near-black for bold text
+          accent: '#997300', // Primary accent color
         }
       }
     },
