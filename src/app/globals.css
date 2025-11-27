@@ -4,72 +4,170 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Defining CSS Variables for Theming - Use these in Tailwind classes like text-brand-dark */
-/* These are the variables from your layout.js previously, now in the CSS file */
+/* BRAND THEME VARIABLES */
 :root {
-  --foreground-rgb: 26, 26, 26; /* brand-dark */
-  --background-rgb: 247, 244, 240; /* brand-cream */
+  --brand-rose: 235, 78, 113;
+  --brand-rose-soft: 245, 200, 210;
+  --brand-cream: 248, 245, 241;
+  --brand-dark: 28, 28, 28;
+  --brand-gold: 212, 175, 55;
+
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-premium: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
-/* Dark Mode Overrides - If you're implementing dark mode via 'class' */
-.dark { /* Tailwind's dark mode applies the 'dark' class to the html tag */
-  --foreground-rgb: 247, 244, 240; /* brand-cream */
-  --background-rgb: 26, 26, 26; /* brand-dark */
+/* DARK MODE */
+.dark {
+  --brand-cream: 28, 28, 28;
+  --brand-dark: 248, 245, 241;
 }
 
+/* GLOBAL BODY */
 body {
-  /* Apply the body background and default text color from your CSS variables */
-  color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-rgb)); /* Use background-color directly */
-  background-attachment: fixed;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out; /* Smooth transitions */
-  
-  /* Apply your default sans font (Lato) to the body */
+  color: rgb(var(--brand-dark));
+  background-color: rgb(var(--brand-cream));
   font-family: var(--font-lato), sans-serif;
-  
-  /* Optional: Global link styling for a premium look */
-  a {
-    color: inherit; /* Inherit text color by default */
-    text-decoration: none;
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -2px; /* Adjust as needed */
-      width: 0;
-      height: 1px; /* Line thickness */
-      background-color: theme('colors.brand.gold'); /* Use your gold color */
-      transition: width 0.3s ease-in-out;
-    }
-    &:hover::after {
-      width: 100%;
-    }
-  }
+  transition: all 0.3s ease-in-out;
+  background-attachment: fixed;
 }
 
-/* Apply the serif font (Playfair Display) to headings */
+/* HEADINGS – Feminine serif (Playfair) */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair), serif;
+  letter-spacing: 0.5px;
 }
 
-/* Additional utility classes or base styles */
+/* BEAUTIFUL GLOBAL LINK STYLE */
+a {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.3s ease-in-out;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 0;
+  background-color: rgb(var(--brand-rose));
+  transition: width 0.3s ease-in-out;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* CONTAINER */
 .container {
-  max-width: 1200px; /* Max width for content */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem; /* Default padding */
+  max-width: 1200px;
+  margin: auto;
+  padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
 
-/* Example: A premium card style */
+/* PREMIUM CARD STYLE */
 .card-premium {
-  @apply bg-white dark:bg-brand-dark p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out;
+  background: white;
+  padding: 1.75rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.35s ease;
 }
 
-/* Ensure images are responsive */
-img {
-  max-width: 100%;
+.card-premium:hover {
+  box-shadow: var(--shadow-premium);
+  transform: translateY(-3px);
+}
+
+/* FEMININE GRADIENT BUTTON */
+.btn-rose {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--brand-rose), 1),
+    rgba(var(--brand-rose-soft), 1)
+  );
+  color: white;
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.btn-rose:hover {
+  box-shadow: var(--shadow-premium);
+  transform: translateY(-2px);
+}
+
+/* GOLD OUTLINE BUTTON */
+.btn-gold-outline {
+  border: 2px solid rgb(var(--brand-gold));
+  color: rgb(var(--brand-gold));
+  padding: 0.65rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.btn-gold-outline:hover {
+  background: rgb(var(--brand-gold));
+  color: white;
+}
+
+/* RESPONSIVE IMAGE CLASS */
+.img-responsive {
+  width: 100%;
   height: auto;
-  display: block;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* PREMIUM HERO SECTION */
+.hero {
+  background: linear-gradient(
+    rgba(248, 245, 241, 0.6),
+    rgba(248, 245, 241, 0.85)
+  ),
+  url('/placeholders/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 6rem 0;
+  text-align: center;
+}
+
+/* PREMIUM SHADOW DIVIDER */
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(var(--brand-rose), 0),
+    rgba(var(--brand-rose), 0.4),
+    rgba(var(--brand-rose), 0)
+  );
+  margin: 3rem 0;
+}
+
+/* PORTFOLIO GRID */
+.portfolio-grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* HOVER ZOOM EFFECT */
+.zoom-hover {
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.zoom-hover img {
+  transition: transform 0.4s ease;
+}
+
+.zoom-hover:hover img {
+  transform: scale(1.06);
 }
