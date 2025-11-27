@@ -2,13 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* BASE LIGHT MODE VARIABLES */
+/* Defining CSS Variables for Theming */
 :root {
   --foreground-rgb: 26, 26, 26; /* brand-dark */
   --background-rgb: 247, 244, 240; /* brand-cream */
 }
 
-/* DARK MODE OVERRIDES */
+/* Dark Mode Overrides */
 :root.dark {
   --foreground-rgb: 247, 244, 240; /* Light text (brand-cream) */
   --background-rgb: 26, 26, 26; /* Dark background (brand-dark) */
@@ -16,14 +16,12 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  /* Applying a very subtle, elegant off-white radial gradient texture */
   background: radial-gradient(at 0% 0%, #ffffff 0px, var(--background-rgb) 50%);
   background-attachment: fixed;
-  /* Add smooth transition for background/text color change */
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s; 
 }
 
-/* Enhancing button hover effects for a premium feel */
+/* Custom Primary Button Styles */
 .btn-primary {
   @apply bg-brand-dark text-white px-8 py-3 rounded-sm uppercase tracking-widest text-sm font-semibold transition-all duration-300 shadow-md;
 }
