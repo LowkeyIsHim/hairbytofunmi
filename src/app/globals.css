@@ -4,170 +4,201 @@
 @tailwind components;
 @tailwind utilities;
 
-/* BRAND THEME VARIABLES */
+/* ============================
+   BRAND THEME COLORS
+   ============================ */
 :root {
-  --brand-rose: 235, 78, 113;
-  --brand-rose-soft: 245, 200, 210;
-  --brand-cream: 248, 245, 241;
-  --brand-dark: 28, 28, 28;
-  --brand-gold: 212, 175, 55;
+  --brand-cream: #faf6f3;
+  --brand-ivory: #f7f4f0;
+  --brand-charcoal: #1d1b1b;
+  --brand-rose: #d8a7b1;
+  --brand-rose-dark: #b98592;
+  --brand-gold: #c7a27b;
+  --brand-shadow: rgba(0, 0, 0, 0.08);
 
-  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-premium: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --transition-fast: 0.25s ease;
+  --transition-medium: 0.4s ease;
 }
 
-/* DARK MODE */
-.dark {
-  --brand-cream: 28, 28, 28;
-  --brand-dark: 248, 245, 241;
-}
-
-/* GLOBAL BODY */
+/* ============================
+   GLOBAL BASE STYLES
+   ============================ */
 body {
-  color: rgb(var(--brand-dark));
-  background-color: rgb(var(--brand-cream));
+  background: var(--brand-ivory);
+  color: var(--brand-charcoal);
+  transition: background var(--transition-medium), color var(--transition-medium);
   font-family: var(--font-lato), sans-serif;
-  transition: all 0.3s ease-in-out;
-  background-attachment: fixed;
 }
 
-/* HEADINGS – Feminine serif (Playfair) */
+/* ============================
+   TYPOGRAPHY
+   ============================ */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair), serif;
-  letter-spacing: 0.5px;
+  font-weight: 600;
+  letter-spacing: .3px;
 }
 
-/* BEAUTIFUL GLOBAL LINK STYLE */
-a {
-  color: inherit;
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 2px;
-  transition: color 0.3s ease-in-out;
+h1 {
+  font-size: 2.75rem;
+  line-height: 1.2;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.5rem;
 }
 
-a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 2px;
-  width: 0;
-  background-color: rgb(var(--brand-rose));
-  transition: width 0.3s ease-in-out;
-}
-
-a:hover::after {
-  width: 100%;
-}
-
-/* CONTAINER */
+/* ============================
+   CONTAINER / LAYOUT
+   ============================ */
 .container {
-  max-width: 1200px;
-  margin: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem;
 }
 
-/* PREMIUM CARD STYLE */
+/* ============================
+   PREMIUM BUTTONS
+   ============================ */
+.btn-premium {
+  background: linear-gradient(135deg, var(--brand-rose), var(--brand-gold));
+  color: #fff;
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: inline-block;
+}
+
+.btn-premium:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px var(--brand-shadow);
+}
+
+/* Outlined version */
+.btn-outline {
+  border: 2px solid var(--brand-rose-dark);
+  padding: 0.65rem 1.5rem;
+  color: var(--brand-charcoal);
+  border-radius: 8px;
+  transition: var(--transition-fast);
+}
+
+.btn-outline:hover {
+  background: var(--brand-rose);
+  color: #fff;
+  border-color: var(--brand-rose);
+}
+
+/* ============================
+   PREMIUM CARD COMPONENTS
+   ============================ */
 .card-premium {
-  background: white;
+  background: #fff;
+  border-radius: 14px;
   padding: 1.75rem;
-  border-radius: 16px;
-  box-shadow: var(--shadow-soft);
-  transition: all 0.35s ease;
+  box-shadow: 0 8px 22px var(--brand-shadow);
+  transition: var(--transition-medium);
 }
 
 .card-premium:hover {
-  box-shadow: var(--shadow-premium);
-  transform: translateY(-3px);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* FEMININE GRADIENT BUTTON */
-.btn-rose {
-  background: linear-gradient(
-    135deg,
-    rgba(var(--brand-rose), 1),
-    rgba(var(--brand-rose-soft), 1)
-  );
-  color: white;
-  padding: 0.75rem 1.75rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  display: inline-block;
-  transition: all 0.3s ease;
+/* ============================
+   IMAGES
+   ============================ */
+img {
+  max-width: 100%;
+  border-radius: 10px;
+  display: block;
 }
 
-.btn-rose:hover {
-  box-shadow: var(--shadow-premium);
-  transform: translateY(-2px);
+/* Hover zoom for portfolio */
+.img-zoom:hover {
+  transform: scale(1.03);
+  transition: transform var(--transition-medium);
 }
 
-/* GOLD OUTLINE BUTTON */
-.btn-gold-outline {
-  border: 2px solid rgb(var(--brand-gold));
-  color: rgb(var(--brand-gold));
-  padding: 0.65rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 600;
-  transition: all 0.25s ease;
+/* ============================
+   NAVBAR + HEADER
+   ============================ */
+.navbar {
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: var(--transition-medium);
 }
 
-.btn-gold-outline:hover {
-  background: rgb(var(--brand-gold));
-  color: white;
+.navbar a {
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: var(--transition-fast);
 }
 
-/* RESPONSIVE IMAGE CLASS */
-.img-responsive {
-  width: 100%;
-  height: auto;
-  border-radius: 14px;
-  object-fit: cover;
+.navbar a:hover {
+  color: var(--brand-rose-dark);
 }
 
-/* PREMIUM HERO SECTION */
-.hero {
-  background: linear-gradient(
-    rgba(248, 245, 241, 0.6),
-    rgba(248, 245, 241, 0.85)
-  ),
-  url('/placeholders/hero.jpg');
-  background-size: cover;
-  background-position: center;
-  padding: 6rem 0;
-  text-align: center;
+/* ============================
+   FOOTER
+   ============================ */
+footer {
+  background: var(--brand-charcoal);
+  color: var(--brand-ivory);
+  padding: 2rem 0;
 }
 
-/* PREMIUM SHADOW DIVIDER */
-.divider {
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    rgba(var(--brand-rose), 0),
-    rgba(var(--brand-rose), 0.4),
-    rgba(var(--brand-rose), 0)
-  );
-  margin: 3rem 0;
+footer a {
+  color: var(--brand-rose);
+  transition: var(--transition-fast);
 }
 
-/* PORTFOLIO GRID */
-.portfolio-grid {
-  display: grid;
-  gap: 1.2rem;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+footer a:hover {
+  color: var(--brand-gold);
 }
 
-/* HOVER ZOOM EFFECT */
-.zoom-hover {
-  overflow: hidden;
-  border-radius: 14px;
+/* ============================
+   LIGHTBOX MODAL (Portfolio)
+   ============================ */
+.lightbox-backdrop {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
 }
 
-.zoom-hover img {
-  transition: transform 0.4s ease;
+.lightbox-content {
+  max-width: 90%;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
 }
 
-.zoom-hover:hover img {
-  transform: scale(1.06);
+/* ============================
+   SECTION SPACING
+   ============================ */
+.section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
+
+/* ============================
+   ANIMATIONS
+   ============================ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.7s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  }
