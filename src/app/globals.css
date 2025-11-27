@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 28, 25, 23;
-  --background-rgb: 255, 255, 255;
+  --foreground-rgb: 30, 27, 25; /* brand-dark */
+  --background-rgb: 250, 249, 246; /* brand-cream */
 }
 
 body {
@@ -17,9 +17,17 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #fdf2f8; 
+  background: #FAF9F6; 
 }
 ::-webkit-scrollbar-thumb {
-  background: #d4af37; 
+  background: #C5B487; /* Champagne */
   border-radius: 4px;
+}
+
+/* Enhancing button hover effects for a premium feel */
+.btn-primary {
+  @apply bg-brand-dark text-white px-8 py-4 rounded-none uppercase tracking-widest text-sm transition-all duration-300;
+}
+.btn-primary:hover {
+  @apply bg-brand-champagne text-brand-dark shadow-lg;
 }
