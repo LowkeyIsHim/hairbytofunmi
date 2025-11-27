@@ -1,4 +1,5 @@
 import { Playfair_Display, Lato } from "next/font/google";
+import "./style.css";
 import { AuthContextProvider } from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
