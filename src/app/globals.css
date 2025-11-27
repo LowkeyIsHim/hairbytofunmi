@@ -1,209 +1,218 @@
-/* ================================
-   GLOBAL PRESET
-=========================*/
+/* NEW PREMIUM BEAUTY BRAND DESIGN
+   HairByTofunmi – Luxury Feminine Theme
+*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* BRAND COLORS */
+/* ===========================================
+   BRAND COLORS (Luxury Rose-Gold Identity)
+=========================================== */
 :root {
-  --cream: #fcf7f4;
-  --ivory: #f8f3ef;
-  --charcoal: #1b1a1a;
-  --rose: #e6b7c7;
-  --rose-deep: #cf8ea3;
-  --gold: #cab08d;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --hb-cream: #fff9f6;
+  --hb-softpink: #f8e4ea;
+  --hb-rose: #d9a6b3;
+  --hb-rose-bold: #c78b9a;
+  --hb-deep: #2b1f23;
+  --hb-gold: #e6c8a5;
+  --hb-shadow: rgba(0, 0, 0, 0.08);
+
+  --radius-lg: 18px;
+  --radius-md: 12px;
+
+  --transition-fast: .25s ease;
+  --transition-smooth: .55s cubic-bezier(.4, 0, .2, 1);
 }
 
-/* GLOBAL BODY */
+/* ===========================================
+   GLOBAL BASE
+=========================================== */
 body {
-  background: var(--cream);
-  color: var(--charcoal);
+  background: var(--hb-cream);
+  color: var(--hb-deep);
   font-family: var(--font-lato), sans-serif;
-  transition: 0.4s ease-in-out;
+  transition: background var(--transition-smooth), color var(--transition-fast);
 }
 
-/* ================================
-   NAVBAR (New premium glass style)
-=================================*/
+/* ===========================================
+   TYPOGRAPHY (Premium Editorial Look)
+=========================================== */
+h1, h2, h3, h4 {
+  font-family: var(--font-playfair), serif;
+  letter-spacing: .2px;
+  color: var(--hb-deep);
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1.22;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2.3rem;
+  font-weight: 600;
+}
+
+p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* ===========================================
+   BUTTONS (Luxury Gradient)
+=========================================== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--hb-rose) 0%, var(--hb-gold) 100%);
+  padding: 0.85rem 2.1rem;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: .4px;
+  display: inline-block;
+  transition: var(--transition-fast);
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,.12);
+}
+
+/* Outline button */
+.btn-outline {
+  border: 2px solid var(--hb-rose);
+  padding: 0.75rem 1.8rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  color: var(--hb-deep);
+  transition: var(--transition-fast);
+}
+
+.btn-outline:hover {
+  background: var(--hb-rose);
+  color: #fff;
+}
+
+/* ===========================================
+   NAVBAR – Floating Glassmorphism
+=========================================== */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.65);
+  padding: 1rem 0;
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  transition: var(--transition-smooth);
 }
 
 .navbar a {
-  font-weight: 600;
-  color: var(--charcoal);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  transition: 0.25s ease;
+  padding: 0.6rem 1rem;
+  font-weight: 500;
+  letter-spacing: .2px;
+  transition: var(--transition-fast);
 }
 
 .navbar a:hover {
-  background: var(--rose);
-  color: #fff;
+  color: var(--hb-rose-bold);
 }
 
-/* ================================
-   NEW HERO SECTION STYLE
-=================================*/
-.hero {
-  padding: 6rem 1.5rem;
-  background: linear-gradient(135deg, var(--rose), var(--gold));
-  color: #fff;
+/* ===========================================
+   HERO SECTION – Premium Beauty Layout
+=========================================== */
+.hero-section {
+  background: linear-gradient(
+      180deg,
+      var(--hb-softpink) 0%,
+      var(--hb-cream) 100%
+  );
+  padding: 6rem 1.5rem 5rem;
   text-align: center;
-  border-bottom-left-radius: 70px;
-  border-bottom-right-radius: 70px;
+  border-radius: 0 0 40px 40px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.05);
 }
 
-.hero h1 {
-  font-family: var(--font-playfair), serif;
-  font-size: 3rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.hero p {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  opacity: 0.95;
-}
-
-/* ================================
-   PREMIUM BUTTONS (New Look)
-=================================*/
-.btn-premium {
-  padding: 0.85rem 2rem;
-  border-radius: 50px;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(to right, var(--rose-deep), var(--gold));
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  transition: 0.3s ease;
-}
-
-.btn-premium:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
-}
-
-/* ================================
-   SECTION WRAPPER (Upgraded)
-=================================*/
-.section {
-  padding: 4rem 1.5rem;
-}
-
-.section-title {
-  font-family: var(--font-playfair), serif;
-  font-size: 2.3rem;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-/* ================================
-   SERVICES (Luxury cards)
-=================================*/
-.card-premium {
-  background: #fff;
-  border-radius: 20px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 28px var(--shadow);
-  transition: 0.4s ease;
-}
-
-.card-premium:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.16);
-}
-
-.card-premium img {
-  border-radius: 16px;
-  margin-bottom: 1rem;
-}
-
-.card-premium h3 {
-  font-family: var(--font-playfair);
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
-}
-
-/* ================================
-   PORTFOLIO GRID (Upgraded!)
-=================================*/
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-
-.portfolio-item {
+/* ===========================================
+   PREMIUM CARDS
+=========================================== */
+.card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 1.8rem;
+  box-shadow: 0 8px 30px var(--hb-shadow);
+  transition: var(--transition-smooth);
   overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0 8px 26px var(--shadow);
-  transition: 0.4s ease;
 }
 
-.portfolio-item:hover {
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+}
+
+/* Image with soft curve */
+.card img {
+  border-radius: var(--radius-md);
+  transition: var(--transition-smooth);
+}
+
+.card img:hover {
   transform: scale(1.04);
 }
 
-.portfolio-item img {
-  width: 100%;
-  height: auto;
-  display: block;
+/* ===========================================
+   SECTION STYLE
+=========================================== */
+.section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
-/* ================================
-   FOOTER (New premium footer)
-=================================*/
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--hb-rose),
+    transparent
+  );
+  margin: 4rem auto;
+  width: 70%;
+}
+
+/* ===========================================
+   PORTFOLIO – Zoom Effect
+=========================================== */
+.portfolio-img {
+  border-radius: var(--radius-md);
+  transition: var(--transition-smooth);
+  box-shadow: 0 8px 20px var(--hb-shadow);
+}
+
+.portfolio-img:hover {
+  transform: scale(1.06);
+  box-shadow: 0 14px 30px rgba(0,0,0,.15);
+}
+
+/* ===========================================
+   FOOTER
+=========================================== */
 footer {
-  background: var(--charcoal);
-  color: var(--ivory);
-  padding: 3rem 1.5rem;
-  text-align: center;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+  background: var(--hb-deep);
+  color: var(--hb-cream);
+  padding: 3rem 0;
+  margin-top: 6rem;
+  border-radius: 30px 30px 0 0;
 }
 
 footer a {
-  color: var(--rose);
-  font-weight: 600;
-  transition: 0.3s ease;
+  color: var(--hb-rose);
+  font-weight: 500;
+  transition: var(--transition-fast);
 }
 
 footer a:hover {
-  color: var(--gold);
-}
-
-/* ================================
-   ANIMATIONS (New modern look)
-=================================*/
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s ease forwards;
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ================================
-   IMAGE SMOOTHNESS
-=================================*/
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  border-radius: 14px;
+  color: var(--hb-gold);
    }
