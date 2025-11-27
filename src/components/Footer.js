@@ -1,27 +1,51 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Playfair_Display, Lato } from "next/font/google";
+import "./globals.css";
+import { AuthContextProvider } from "@/context/AuthContext";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
-export default function Footer() {
-  const pathname = usePathname();
-  if (pathname.includes('/admin')) return null;
+const playfair = Playfair_Display({ 
+  subsets: ["latin"], 
+  variable: "--font-playfair" 
+});
+const lato = Lato({ 
+  weight: ['300', '400', '700'], 
+  subsets: ["latin"], 
+  variable: "--font-lato" 
+});
 
+export const metadata = {
+  title: "HairByTofunmi | Premium Styling",
+  description: "Transforming hair dreams into reality.",
+  icons: {
+    icon: '/favicon.ico',
+  }
+};
+
+export default function RootLayout({ children }) {
   return (
-    <footer className="bg-brand-50 border-t border-brand-100 py-12">
-      <div className="max-w-7xl mx-auto px-4 text-center">
-        <p className="font-serif text-2xl mb-4 text-brand-dark">HairByTofunmi</p>
-        <p className="text-gray-600 mb-6 max-w-md mx-auto">
-          Transforming hair dreams into reality with elegance, style, and care.
-        </p>
-        <div className="flex justify-center space-x-6 text-sm text-gray-500 tracking-wide">
-            <Link href="/services">Services</Link>
-            <Link href="/portfolio">Portfolio</Link>
-            <Link href="/contact">Contact</Link>
-        </div>
-        <p className="text-xs text-gray-400 mt-8">
-          © {new Date().getFullYear()} HairByTofunmi. All rights reserved.
-        </p>
-      </div>
-    </footer>
+    <html lang="en">
+      <body className={`min-h-screen antialiased ${playfair.variable} ${lato.variable} flex flex-col`}>
+        <AuthContextProvider>
+          <Navbar />
+          {/* Added flex-grow and padding-top to compensate for the fixed Navbar height (defined in globals.css) */}
+          <main className="flex-grow pt-[var(--navbar-height)]"> 
+            {children}
+          </main>
+          <Footer />
+          
+          <Toaster 
+            position="bottom-center" 
+            toastOptions={{
+              style: {
+                background: '#333',
+                color: '#fff',
+              }
+            }}
+          />
+        </AuthContextProvider>
+      </body>
+    </html>
   );
-}
+              }
