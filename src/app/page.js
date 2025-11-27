@@ -120,8 +120,8 @@ export default function Home() {
           {featured.map((style, index) => (
             <motion.div 
               key={style.id} 
-              // Using the globally defined .card-premium class
-              className="card-premium h-[480px] overflow-hidden" // Increased card height for impact
+              // Using the globally defined .card-premium class, and adding 'group' here directly
+              className="card-premium h-[480px] overflow-hidden group" // FIXED: Added 'group'
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
