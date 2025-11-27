@@ -1,3 +1,4 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -5,8 +6,9 @@ const nextConfig = {
       "images.unsplash.com", 
       "plus.unsplash.com", 
       "i.pinimg.com", 
-      "i.imgur.com"
-    ], // Allow external images
+      "i.imgur.com",
+      "files.catbox.moe"
+    ],
   },
 };
 
