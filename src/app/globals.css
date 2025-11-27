@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* BASE LIGHT MODE VARIABLES */
+:root {
+  --foreground-rgb: 26, 26, 26; /* brand-dark */
+  --background-rgb: 247, 244, 240; /* brand-cream */
+}
+
+/* 💡 DARK MODE OVERRIDES 💡 */
+:root.dark {
+  --foreground-rgb: 247, 244, 240; /* Light text (brand-cream) */
+  --background-rgb: 26, 26, 26; /* Dark background (brand-dark) */
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: radial-gradient(at 0% 0%, #ffffff 0px, var(--background-rgb) 50%);
+  background-attachment: fixed;
+  /* Add smooth transition for a premium feel */
+  transition: background-color 0.3s, color 0.3s; 
+}
+
+/* ... rest of your custom classes (.btn-primary, etc.) */
+
+
 /* Using the richer theme colors */
 :root {
   --foreground-rgb: 26, 26, 26; /* brand-dark */
