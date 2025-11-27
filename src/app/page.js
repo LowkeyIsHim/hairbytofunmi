@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext"; // CRITICAL: Import the useAuth hook
 
 // Use a placeholder for the actual style data if none is loaded yet
 const placeholderStyles = [
@@ -15,18 +15,27 @@ const placeholderStyles = [
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
+  
+  // Use the Auth context to get db and readiness state
+  const { db, isAuthReady } = useAuth(); 
 
   useEffect(() => {
     const fetchFeatured = async () => {
+      // 1. Guard against running query before Auth is ready
+      if (!isAuthReady || !db) {
+         if (isAuthReady) {
+            console.error("Firestore DB not available, using placeholders.");
+            setFeatured(placeholderStyles);
+         }
+         return; 
+      }
+      
+      console.log("Fetching featured styles from Firestore...");
       try {
-        if (!db) {
-             console.error("Firestore DB not initialized.");
-             setFeatured(placeholderStyles);
-             return;
-        }
         const q = query(collection(db, "styles"), where("featured", "==", true), limit(3));
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
         // If data is empty, use placeholders to still show the design
         setFeatured(data.length > 0 ? data : placeholderStyles);
       } catch (error) {
@@ -34,8 +43,10 @@ export default function Home() {
         setFeatured(placeholderStyles);
       }
     };
+    
     fetchFeatured();
-  }, []);
+    
+  }, [db, isAuthReady]); // Re-run effect when db or readiness changes
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -121,7 +132,7 @@ export default function Home() {
             <motion.div 
               key={style.id} 
               // Using the globally defined .card-premium class, and adding 'group' here directly
-              className="card-premium h-[480px] overflow-hidden group" // FIXED: Added 'group'
+              className="card-premium h-[480px] overflow-hidden group"
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
@@ -179,4 +190,4 @@ export default function Home() {
       </section>
     </div>
   );
-                }
+                     }
