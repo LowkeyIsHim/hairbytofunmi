@@ -1,0 +1,30 @@
+/* src/app/globals.css (Restored Styles) */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Defining CSS Variables for Theming */
+:root {
+  --foreground-rgb: 26, 26, 26; /* brand-dark */
+  --background-rgb: 247, 244, 240; /* brand-cream */
+}
+/* Dark Mode Overrides */
+:root.dark {
+  --foreground-rgb: 247, 244, 240; /* brand-cream */
+  --background-rgb: 26, 26, 26; /* brand-dark */
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  /* Using the CSS variables now defined here */
+  background: radial-gradient(at 0% 0%, #ffffff 0px, var(--background-rgb) 50%);
+  background-attachment: fixed;
+  transition: background-color 0.3s, color 0.3s;
+  /* Setting default fonts using the CSS variables from layout.js */
+  font-family: var(--font-lato);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+}
