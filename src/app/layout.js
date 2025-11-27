@@ -1,9 +1,10 @@
+// src/app/layout.js (Refined)
 
 import { Playfair_Display, Lato } from "next/font/google";
-import "./globals.css";
+import "./globals.css"; // Your main stylesheet
 import { AuthContextProvider } from "@/context/AuthContext";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar"; // Assuming Navbar is correctly imported
+import Footer from "@/components/Footer"; // Assuming Footer is correctly imported
 import { Toaster } from "react-hot-toast";
 
 const playfair = Playfair_Display({ 
@@ -27,19 +28,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* 1. Apply font variables and base classes here */}
-      <body className={`min-h-screen antialiased ${playfair.variable} ${lato.variable}`}>
-        {/* 2. FIX: AuthContextProvider MUST wrap all child components that need its state */}
+      <body 
+        // Applying the font variables and a robust base class for min height
+        className={`min-h-screen antialiased ${playfair.variable} ${lato.variable}`}
+      >
         <AuthContextProvider>
-          {/* 3. The main content starts here */}
           <Navbar />
-          {/* Ensure main has min-h-screen to push footer down */}
-          <main>
+          {/* Main content area - flexible padding handled by individual pages/sections */}
+          <main className="flex-grow pt-[var(--navbar-height)]"> {/* Adjust pt- to match navbar height */}
             {children}
           </main>
           <Footer />
-          
-          {/* Toaster should be inside the body and usually outside the main layout components */}
           <Toaster 
             position="bottom-center" 
             toastOptions={{
