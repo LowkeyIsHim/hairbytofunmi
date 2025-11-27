@@ -1,21 +1,28 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}"
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
-      colors: {
-        primary: '#F7C9C0', // feminine pastel
-        secondary: '#FFF1F0',
-        accent: '#E57C7C'
-      },
       fontFamily: {
-        body: ['"Inter"', 'sans-serif'],
-        heading: ['"Playfair Display"', 'serif']
+        serif: ['var(--font-playfair)', 'serif'],
+        sans: ['var(--font-lato)', 'sans-serif'],
+      },
+      colors: {
+        brand: {
+          50: '#fdf2f8', // Very light pink
+          100: '#fce7f3',
+          500: '#ec4899', // Pink accent
+          800: '#9d174d', // Dark pink
+          900: '#831843', // Deep styling
+          gold: '#d4af37', // Luxury Gold
+          dark: '#1c1917', // Charcoal
+        }
       }
     },
   },
   plugins: [],
-}
+};
