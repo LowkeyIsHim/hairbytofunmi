@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-// Assuming db is correctly initialized and paths are resolved
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
-import { db } from "@/lib/firebase"; 
+import { db } from "@/lib/firebase";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-// Placeholder data structure remains the same
+// Use a placeholder for the actual style data if none is loaded yet
 const placeholderStyles = [
-    { id: 'p1', name: 'Butterfly Locs', price: 12000, imageUrl: 'https://files.catbox.moe/307vwv.jpeg', featured: true },
-    { id: 'p2', name: 'Knotless Braids', price: 7000, imageUrl: 'https://files.catbox.moe/751jcs.jpeg', featured: true },
-    { id: 'p3', name: 'French Curls Braid', price: 10000, imageUrl: 'https://files.catbox.moe/hegokr.jpeg', featured: true },
+    { id: 'p1', name: 'Butterfly Locs', price: 12000, imageUrl: 'https://files.catbox.moe/307vwv.jpeg', featured: true, description: "Intricate, flowing locs for a dramatic and protective look." },
+    { id: 'p2', name: 'Knotless Braids', price: 7000, imageUrl: 'https://files.catbox.moe/751jcs.jpeg', featured: true, description: "Smooth, pain-free braiding technique for natural comfort and style." },
+    { id: 'p3', name: 'French Curls Braid', price: 10000, imageUrl: 'https://files.catbox.moe/hegokr.jpeg', featured: true, description: "Elegant fusion of protective braiding and romantic, soft curls." },
 ];
 
 export default function Home() {
@@ -20,7 +19,6 @@ export default function Home() {
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        // NOTE: Ensure db is correctly initialized via "@/lib/firebase"
         if (!db) {
              console.error("Firestore DB not initialized.");
              setFeatured(placeholderStyles);
@@ -39,18 +37,17 @@ export default function Home() {
     fetchFeatured();
   }, []);
 
-  // Framer Motion variants for subtle entry
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
   };
 
   return (
     <div className="w-full">
-      {/* HERO SECTION: MODERN, HIGH-IMPACT LAYOUT */}
-      <section className="relative h-[90vh] md:h-[95vh] flex items-center justify-start bg-brand-cream overflow-hidden">
+      {/* HERO SECTION: High Contrast, Dramatic Luxury Vibe */}
+      <section className="relative h-[90vh] md:h-[95vh] flex items-center justify-start bg-brand-cream dark:bg-brand-dark overflow-hidden">
         
-        {/* Full-height, fixed-ratio Image for contrast and texture (Right Side) */}
+        {/* Full-height image for contrast and texture (Right Side) */}
         <div className="absolute top-0 right-0 w-full md:w-1/2 h-full">
           <Image 
             src="https://images.unsplash.com/photo-1621250325150-1c4b7b2521b4?q=80&w=1974&auto=format&fit=crop" 
@@ -64,21 +61,21 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-l from-brand-cream/0 via-brand-cream/70 to-brand-cream dark:from-brand-dark/0 dark:via-brand-dark/70 dark:to-brand-dark"></div>
         </div>
         
-        {/* Content Block (Left Side) - Generous padding and maximum whitespace */}
-        <div className="relative z-10 max-w-xl mx-auto md:ml-16 lg:ml-24 py-20 text-left px-4 md:px-0">
+        {/* Content Block (Left Side) - Maximum whitespace, deep typography */}
+        <div className="relative z-10 max-w-xl mx-auto md:ml-16 lg:ml-24 py-20 text-left px-6 md:px-0">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-xl uppercase tracking-[0.4em] text-brand-mauve mb-4 font-sans font-medium"
+            className="text-xl uppercase tracking-[0.4em] text-brand-mauve dark:text-brand-cream/60 mb-4 font-sans font-medium"
           >
-            The HairByTofunmi Experience
+            The Art of Refinement
           </motion.p>
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", damping: 10, stiffness: 100, delay: 0.2 }}
-            // Larger, more impactful font size using Playfair Display (from globals.css h1 styling)
+            // Large, impactful Playfair heading
             className="text-7xl md:text-8xl font-serif text-brand-dark dark:text-brand-cream mb-6 tracking-tight leading-none"
           >
             Crafting Your Crown
@@ -105,18 +102,17 @@ export default function Home() {
       </section>
       
       {/* FEATURED STYLES: ELEGANT CARD GRID */}
-      {/* Using .page-container for consistent, generous padding */}
-      <section className="page-container bg-brand-cream dark:bg-brand-dark min-h-[50vh]">
+      <section className="page-container bg-brand-cream dark:bg-brand-dark">
         <motion.h2 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             // Using the globally defined .section-heading class
-            className="section-heading text-brand-dark dark:text-brand-cream"
+            className="section-heading"
         >
             The Signature Lookbook
         </motion.h2>
-        <p className="section-description text-gray-600 dark:text-gray-400">
+        <p className="section-description">
             A curated selection of our most requested and exclusive protective styles—handcrafted for timeless elegance.
         </p>
         
@@ -125,27 +121,33 @@ export default function Home() {
             <motion.div 
               key={style.id} 
               // Using the globally defined .card-premium class
-              className="card-premium h-[450px] overflow-hidden group"
+              className="card-premium h-[480px] overflow-hidden" // Increased card height for impact
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Image 
-                src={style.imageUrl} 
-                alt={style.name} 
-                fill 
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105" 
-              />
+              <div className="relative h-2/3 w-full">
+                <Image 
+                  src={style.imageUrl} 
+                  alt={style.name} 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105" 
+                />
+              </div>
               
-              {/* Premium Title Overlay - Adjusted for better contrast and depth */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 w-full bg-white/95 dark:bg-brand-dark/95 backdrop-blur-sm shadow-2xl transition-all duration-300">
-                <h3 className="font-serif text-3xl text-brand-dark dark:text-brand-cream mb-1">{style.name}</h3>
-                <p className="text-brand-gold font-bold text-xl mt-1 tracking-wide">
-                    ₦{style.price?.toLocaleString()}
-                </p>
+              {/* Premium Title Block - Separated from image for cleaner presentation */}
+              <div className="p-6 h-1/3 flex flex-col justify-between">
+                <div>
+                    <h3 className="font-serif text-3xl text-brand-dark dark:text-brand-cream mb-1">{style.name}</h3>
+                    <p className="text-brand-gold font-bold text-xl mt-1 tracking-wide">
+                        ₦{style.price?.toLocaleString()}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{style.description}</p>
+                </div>
+                
                 <div className="mt-4">
                    <Link href="/services" className="text-brand-mauve dark:text-brand-cream/70 font-semibold text-lg hover:text-brand-gold transition-colors duration-200">
                         View Details →
@@ -169,12 +171,12 @@ export default function Home() {
 
       {/* Testimonials/Mission Section Placeholder */}
       <section className="page-container py-20 text-center">
-        <h2 className="text-4xl font-serif text-brand-dark dark:text-brand-cream mb-4">Our Commitment to You</h2>
+        <h2 className="text-4xl font-serif text-brand-dark dark:text-brand-cream mb-4">The HairByTofunmi Promise</h2>
         <p className="text-xl max-w-2xl mx-auto text-gray-700 dark:text-gray-300 mb-12">
-            Experience the difference of personalized service and artistic excellence.
+            Excellence is not a luxury, but our standard. Experience the difference of personalized service and artistic dedication.
         </p>
         {/* Add a testimonial slider or a three-column value proposition section here */}
       </section>
     </div>
   );
-}
+                }
