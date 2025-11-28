@@ -51,9 +51,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full bg-brand-cream">
+    <div className="w-full bg-brand-cream dark:bg-brand-dark transition-colors duration-500">
       
-      {/* --- HERO SECTION --- */}
+      {/* --- HERO SECTION: Increased Contrast & Dark Mode --- */}
       <section className="relative h-screen w-full overflow-hidden flex items-center">
         {/* Parallax Background Image */}
         <div className="absolute inset-0 z-0">
@@ -62,10 +62,10 @@ export default function Home() {
             alt="Luxury Hair Styling" 
             fill 
             priority
-            className="object-cover opacity-90 animate-slow-zoom" // Adds slow movement
+            className="object-cover opacity-80 dark:opacity-70 transition-opacity animate-slow-zoom" // Darker image in dark mode
           />
-          {/* Cinematic Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-cream/90 via-brand-cream/60 to-transparent md:via-brand-cream/40"></div>
+          {/* Cinematic Gradient Overlay (Dark mode requires a dark overlay for contrast) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-cream/90 via-brand-cream/60 to-transparent dark:from-brand-dark/90 dark:via-brand-dark/70 transition-colors"></div>
         </div>
 
         {/* Hero Content */}
@@ -78,7 +78,7 @@ export default function Home() {
               className="flex items-center gap-4 mb-6"
             >
               <div className="h-[1px] w-12 bg-brand-gold"></div>
-              <span className="text-brand-dark uppercase tracking-[0.3em] text-xs font-bold">
+              <span className="text-brand-dark dark:text-brand-cream uppercase tracking-[0.3em] text-xs font-bold">
                 Premium Hair Artistry
               </span>
             </motion.div>
@@ -87,17 +87,18 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="text-6xl md:text-8xl text-brand-dark leading-[0.95] mb-8"
+              className="text-6xl md:text-8xl text-brand-dark dark:text-brand-cream leading-[0.95] mb-8 transition-colors"
             >
               Define Your <br />
-              <span className="italic font-serif text-brand-gold">Elegance.</span>
+              {/* Use the text-gradient-gold utility here for ultimate luxury */}
+              <span className="italic font-serif text-gradient-gold">Elegance.</span>
             </motion.h1>
 
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.4 }}
-              className="text-lg text-brand-charcoal/80 mb-10 max-w-md font-light leading-relaxed"
+              className="text-lg text-brand-dark/80 dark:text-brand-cream/80 mb-10 max-w-md font-light leading-relaxed transition-colors"
             >
               Experience bespoke styling where precision meets luxury. 
               We don't just do hair; we craft your crown.
@@ -108,26 +109,29 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
+              {/* Using the new 'group' structure for the button (Note: You still need to ensure 'btn-primary' in globals.css is correct) */}
               <Link href="/services" className="btn-primary group">
-                <span className="relative z-10 uppercase text-xs tracking-[0.2em]">Reserve Appointment</span>
-                <div className="absolute inset-0 h-full w-full scale-0 rounded-sm transition-all duration-300 group-hover:scale-100 group-hover:bg-brand-gold/20"></div>
+                 {/* This button styling is now handled by the PrimaryButton.js structure we discussed earlier. 
+                 I've simplified the classes here to rely on the CSS definition. */}
+                 <span className="relative z-10 uppercase text-xs tracking-[0.2em]">Reserve Appointment</span>
+                 <div className="btn-primary-wipe bg-brand-dark dark:bg-brand-cream"></div>
               </Link>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* --- FEATURED COLLECTION --- */}
-      <section className="py-32 px-6">
+      {/* --- FEATURED COLLECTION: Dark Mode Applied --- */}
+      <section className="py-32 px-6 bg-brand-cream dark:bg-brand-dark transition-colors">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16">
             <div>
-              <h2 className="text-4xl md:text-5xl text-brand-dark mb-4">The Collection</h2>
-              <p className="text-brand-charcoal/60 font-light max-w-sm">
+              <h2 className="text-4xl md:text-5xl text-brand-dark dark:text-brand-cream mb-4 transition-colors">The Collection</h2>
+              <p className="text-brand-dark/60 dark:text-brand-cream/60 font-light max-w-sm transition-colors">
                 Curated styles for the modern woman. Click any image to view details.
               </p>
             </div>
-            <Link href="/services" className="hidden md:block text-brand-dark border-b border-brand-gold pb-1 hover:text-brand-gold transition-colors uppercase text-xs tracking-widest">
+            <Link href="/services" className="hidden md:block text-brand-dark dark:text-brand-cream border-b border-brand-gold pb-1 hover:text-brand-gold transition-colors uppercase text-xs tracking-widest">
               View Full Menu
             </Link>
           </div>
@@ -141,10 +145,10 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="group cursor-pointer"
-                onClick={() => setSelectedImage(style)} // Trigger Modal
+                onClick={() => setSelectedImage(style)}
               >
                 {/* Image Wrapper */}
-                <div className="relative h-[500px] w-full overflow-hidden mb-6 shadow-lg">
+                <div className="relative h-[500px] w-full overflow-hidden mb-6 shadow-xl dark:shadow-none">
                   <Image 
                     src={style.imageUrl} 
                     alt={style.name} 
@@ -153,8 +157,8 @@ export default function Home() {
                   />
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <div className="bg-white/90 backdrop-blur-sm p-4 rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-brand-dark">
+                    <div className="bg-white/90 dark:bg-brand-dark/90 backdrop-blur-sm p-4 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-brand-dark dark:text-brand-cream">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                         </svg>
                     </div>
@@ -162,12 +166,12 @@ export default function Home() {
                 </div>
 
                 {/* Card Text Info */}
-                <div className="flex justify-between items-start border-t border-brand-dark/10 pt-4">
+                <div className="flex justify-between items-start border-t border-brand-dark/10 dark:border-brand-cream/10 pt-4 transition-colors">
                   <div>
-                    <h3 className="text-2xl font-serif text-brand-dark group-hover:text-brand-gold transition-colors">{style.name}</h3>
-                    <p className="text-sm text-brand-charcoal/60 mt-1 max-w-[250px]">{style.description || "Premium protective styling."}</p>
+                    <h3 className="text-2xl font-serif text-brand-dark dark:text-brand-cream group-hover:text-brand-gold transition-colors">{style.name}</h3>
+                    <p className="text-sm text-brand-dark/60 dark:text-brand-cream/60 mt-1 max-w-[250px] transition-colors">{style.description || "Premium protective styling."}</p>
                   </div>
-                  <span className="text-lg font-medium text-brand-dark">₦{style.price?.toLocaleString()}</span>
+                  <span className="text-lg font-medium text-brand-dark dark:text-brand-cream transition-colors">₦{style.price?.toLocaleString()}</span>
                 </div>
               </motion.div>
             ))}
@@ -190,7 +194,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] bg-brand-dark/95 backdrop-blur-md flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)} // Click outside to close
+            onClick={() => setSelectedImage(null)}
           >
             {/* Close Button */}
             <button className="absolute top-6 right-6 text-white hover:text-brand-gold transition-colors z-50">
@@ -203,10 +207,10 @@ export default function Home() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-5xl w-full h-[80vh] flex flex-col md:flex-row bg-brand-cream rounded-sm overflow-hidden shadow-2xl"
-              onClick={(e) => e.stopPropagation()} // Prevent close when clicking content
+              className="relative max-w-5xl w-full h-[80vh] flex flex-col md:flex-row bg-brand-cream dark:bg-brand-dark rounded-sm overflow-hidden shadow-2xl transition-colors"
+              onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Image */}
+              {/* Modal Image (remains the same) */}
               <div className="relative w-full md:w-2/3 h-2/3 md:h-full">
                 <Image 
                     src={selectedImage.imageUrl} 
@@ -217,17 +221,17 @@ export default function Home() {
               </div>
               
               {/* Modal Details */}
-              <div className="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-center bg-white">
-                <h3 className="text-4xl font-serif text-brand-dark mb-2">{selectedImage.name}</h3>
+              <div className="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-center bg-brand-cream dark:bg-brand-dark transition-colors">
+                <h3 className="text-4xl font-serif text-brand-dark dark:text-brand-cream mb-2 transition-colors">{selectedImage.name}</h3>
                 <div className="w-12 h-[2px] bg-brand-gold mb-6"></div>
                 
-                <p className="text-brand-charcoal mb-8 leading-relaxed">
+                <p className="text-brand-dark/80 dark:text-brand-cream/80 mb-8 leading-relaxed transition-colors">
                     {selectedImage.description || "Handcrafted with precision and care to ensure longevity and natural beauty. This style includes wash, prep, and finishing oil treatment."}
                 </p>
                 
                 <div className="flex items-baseline gap-2 mb-10">
-                    <span className="text-sm text-gray-500 uppercase tracking-wide">Starting at</span>
-                    <span className="text-3xl font-medium text-brand-dark">₦{selectedImage.price?.toLocaleString()}</span>
+                    <span className="text-sm text-gray-500 uppercase tracking-wide dark:text-gray-400">Starting at</span>
+                    <span className="text-3xl font-medium text-brand-dark dark:text-brand-cream transition-colors">₦{selectedImage.price?.toLocaleString()}</span>
                 </div>
 
                 <Link href="/services" className="btn-primary text-center">
@@ -239,8 +243,8 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* --- TEXTURE/DIVIDER SECTION --- */}
-      <section className="py-20 bg-brand-dark text-brand-cream text-center px-4">
+      {/* --- TEXTURE/DIVIDER SECTION (High Contrast) --- */}
+      <section className="py-20 bg-brand-dark text-brand-cream dark:bg-brand-cream dark:text-brand-dark text-center px-4 transition-colors">
         <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-serif leading-tight italic">
                 "Beauty is an attitude. We just provide the crown."
