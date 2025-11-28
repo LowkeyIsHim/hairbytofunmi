@@ -1,12 +1,26 @@
-// src/components/ThemeSwitch.js
+// src/components/ThemeSwitch.js (Updated with Hydration Guard)
 
 "use client";
 import { Moon, Sun } from 'lucide-react';
-import { useTheme } from '@/context/ThemeContext'; // <-- NEW IMPORT
-import { motion } from 'framer-motion';
+import { useTheme } from '@/context/ThemeContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react'; // <-- NEW IMPORTS
 
 export default function ThemeSwitch() {
   const { theme, toggleTheme } = useTheme();
+  // State to track if the component has mounted on the client
+  const [mounted, setMounted] = useState(false); 
+
+  // Set mounted to true after the initial render (hydration)
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // IMPORTANT: Do not render the theme-dependent UI until mounted
+  if (!mounted) {
+    // Return a null placeholder or a simple loading spinner to reserve space
+    return <div className="w-[36px] h-[36px]"></div>; 
+  }
 
   return (
     <motion.button
