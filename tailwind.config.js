@@ -5,7 +5,9 @@ module.exports = {
   // Ensure 'class' mode is enabled for Dark Mode switching
   darkMode: 'class', 
   content: [
-    // ... your content paths ...
+  "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
