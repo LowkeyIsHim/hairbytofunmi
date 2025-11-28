@@ -1,4 +1,3 @@
-
 import { Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
@@ -8,44 +7,39 @@ import { Toaster } from "react-hot-toast";
 
 const playfair = Playfair_Display({ 
   subsets: ["latin"], 
-  variable: "--font-playfair" 
+  variable: "--font-playfair",
+  display: 'swap',
 });
+
 const lato = Lato({ 
   weight: ['300', '400', '700'], 
   subsets: ["latin"], 
-  variable: "--font-lato" 
+  variable: "--font-lato",
+  display: 'swap',
 });
 
 export const metadata = {
   title: "HairByTofunmi | Premium Styling",
-  description: "Transforming hair dreams into reality.",
-  icons: {
-    icon: '/favicon.ico',
-  }
+  description: "Bespoke hair styling and protective styles for the modern woman.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      {/* 1. Apply font variables and base classes here */}
-      <body className={`min-h-screen antialiased ${playfair.variable} ${lato.variable}`}>
-        {/* 2. FIX: AuthContextProvider MUST wrap all child components that need its state */}
+    <html lang="en" className={`${playfair.variable} ${lato.variable}`}>
+      <body className="min-h-screen antialiased bg-brand-cream text-brand-dark">
         <AuthContextProvider>
-          {/* 3. The main content starts here */}
           <Navbar />
-          {/* Ensure main has min-h-screen to push footer down */}
-          <main>
+          <main className="min-h-screen">
             {children}
           </main>
           <Footer />
-          
-          {/* Toaster should be inside the body and usually outside the main layout components */}
           <Toaster 
             position="bottom-center" 
             toastOptions={{
               style: {
-                background: '#333',
+                background: '#1A1A1A',
                 color: '#fff',
+                fontFamily: 'var(--font-lato)',
               }
             }}
           />
