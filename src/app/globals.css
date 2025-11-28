@@ -47,3 +47,39 @@ h1, h2, h3, h4, h5, h6 {
   background: #C5A059;
   color: white;
 }
+
+/* --- BUTTON COMPONENTS (Premium Style) --- */
+
+.btn-primary {
+  /* Define core button appearance using the luxury palette */
+  @apply relative inline-flex items-center justify-center 
+         px-8 py-4 overflow-hidden font-medium 
+         tracking-widest uppercase text-white 
+         transition duration-300 ease-out 
+         bg-brand-dark shadow-xl 
+         border border-transparent; /* Ensure a clean edge */
+}
+
+/* The inner span that acts as the wipe animation */
+.btn-primary-wipe {
+  @apply absolute inset-0 transform 
+         transition-all duration-700 ease-out 
+         bg-brand-gold; /* Use the new metallic gold for the hover color */
+}
+
+/* The content span that stays visible */
+.btn-primary-content {
+  @apply relative z-10 text-center;
+}
+
+/* The hover effect relies on the 'group-hover' class being on the parent element (in JSX). 
+   This CSS applies when the parent .btn-primary has the 'group-hover' state. */
+
+.group:hover .btn-primary-wipe {
+  @apply scale-y-0; /* Wipe effect: scale the gold background down to zero */
+}
+
+/* Optional: Subtle border on hover */
+.group:hover .btn-primary {
+  @apply border-brand-dark; 
+}
