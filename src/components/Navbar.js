@@ -30,6 +30,7 @@ export default function Navbar() {
   return (
     <>
     <nav 
+      // Background change on scroll is perfect for a premium feel
       className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${
         scrolled ? "bg-brand-cream/95 backdrop-blur-md py-2 shadow-sm" : "bg-transparent py-6"
       }`}
@@ -39,7 +40,7 @@ export default function Navbar() {
           
           {/* Logo Area */}
           <Link href="/" className="z-50">
-            {/* We scale the logo down slightly on scroll for a smooth effect */}
+            {/* Logo size transition */}
             <div className={`transition-all duration-500 ${scrolled ? 'w-32' : 'w-40'}`}>
                 <Logo />
             </div>
@@ -59,9 +60,42 @@ export default function Navbar() {
               </Link>
             ))}
             
-            {/* Call to Action Button */}
-            <Link href="/book" className="border border-brand-dark px-6 py-2 text-xs uppercase tracking-[0.2em] hover:bg-brand-dark hover:text-brand-cream transition-all duration-300">
-                Book Now
+            {/* Call to Action Button - Upgraded for Luxury Effect */}
+            <Link 
+                href="/book" 
+                className="
+                  relative 
+                  group 
+                  overflow-hidden 
+                  border border-brand-dark 
+                  px-6 py-2 
+                  text-xs 
+                  uppercase 
+                  tracking-[0.2em] 
+                  text-brand-dark 
+                  transition-colors 
+                  duration-500
+                "
+            >
+                {/* Gold Hover Background Wipe */}
+                <span 
+                    className="
+                      absolute inset-0 
+                      bg-brand-dark 
+                      transform 
+                      scale-x-0 
+                      origin-right 
+                      transition-transform 
+                      duration-500 
+                      group-hover:scale-x-100 
+                      group-hover:origin-left
+                    "
+                ></span>
+                
+                {/* Button Text */}
+                <span className="relative z-10 transition-colors duration-500 group-hover:text-brand-cream">
+                    Book Now
+                </span>
             </Link>
           </div>
 
@@ -94,7 +128,12 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-             <Link href="/book" onClick={() => setIsOpen(false)} className="mt-8 bg-brand-dark text-brand-cream px-8 py-3 uppercase tracking-widest text-sm">
+             {/* Upgraded Mobile CTA Link to match the desktop button style */}
+             <Link 
+                href="/book" 
+                onClick={() => setIsOpen(false)} 
+                className="mt-8 bg-brand-dark text-brand-cream px-8 py-3 uppercase tracking-widest text-sm"
+            >
                 Book Appointment
             </Link>
         </motion.div>
