@@ -1,31 +1,37 @@
+// tailwind.config.js
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
+  // Ensure 'class' mode is enabled for Dark Mode switching
+  darkMode: 'class', 
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    // ... your content paths ...
   ],
   theme: {
     extend: {
-      fontFamily: {
-        serif: ['var(--font-playfair)', 'serif'],
-        sans: ['var(--font-lato)', 'sans-serif'],
-      },
       colors: {
-        brand: {
-          cream: '#FAF9F6', // Slightly brighter off-white (Alabaster)
-          gold: '#C5A059',  // A true metallic champagne gold
-          goldLight: '#E5C585', // Highlight gold for gradients
-          mauve: '#9D8189', // Dustier, softer mauve
-          dark: '#121212',  // Richer luxury black
-          gray: '#4A4A4A',  // Slate gray for subtext
-        }
+        // --- VVIP Luxury Palette ---
+        'brand-dark': '#121212',       // Deep Charcoal / Near Black
+        'brand-cream': '#FAF9F6',      // Off-White / Ivory Base
+        'brand-gold': '#C5A059',       // Champagne/Antique Gold Accent
+        'brand-charcoal': '#444444',   // Muted Dark Text/Accent
       },
-      backgroundImage: {
-        'gold-gradient': 'linear-gradient(to right, #C5A059, #E5C585, #C5A059)',
-      }
+      // You can also extend typography styles here if needed later
+      fontFamily: {
+        playfair: ['var(--font-playfair)'],
+        lato: ['var(--font-lato)'],
+      },
+      // Optional: Add slow zoom for Hero Image parallax effect
+      keyframes: {
+        'slow-zoom': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+        },
+      },
+      animation: {
+        'slow-zoom': 'slow-zoom 30s ease-in-out infinite',
+      },
     },
   },
   plugins: [],
-};
+}
