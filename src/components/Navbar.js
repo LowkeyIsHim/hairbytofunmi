@@ -1,103 +1,105 @@
 "use client";
-import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import Logo from "./Logo";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  // Detect scroll to change navbar style
+  if (pathname.includes('/admin')) return null;
+
+  // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Lookbook", href: "/portfolio" }, // Changed from "Portfolio" for luxury feel
+  const links = [
     { name: "Services", href: "/services" },
+    { name: "Portfolio", href: "/portfolio" },
+    { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-          scrolled
-            ? "bg-brand-cream/90 backdrop-blur-md shadow-sm py-4"
-            : "bg-transparent py-6"
-        }`}
-      >
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          {/* Logo */}
-          <Link href="/" className="z-50 relative group">
-            <h1 className={`font-serif text-2xl tracking-tighter ${scrolled ? 'text-brand-dark' : 'text-brand-dark md:text-white mix-blend-difference'}`}>
-              HairBy<span className="italic text-brand-gold">Tofunmi</span>
-            </h1>
+    <nav 
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${
+        scrolled ? "bg-brand-cream/95 backdrop-blur-md py-2 shadow-sm" : "bg-transparent py-6"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="flex justify-between items-center">
+          
+          {/* Logo Area */}
+          <Link href="/" className="z-50">
+            {/* We scale the logo down slightly on scroll for a smooth effect */}
+            <div className={`transition-all duration-500 ${scrolled ? 'w-32' : 'w-40'}`}>
+                <Logo />
+            </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-12 items-center">
-            {navLinks.map((link) => (
+          {/* Desktop Menu - Centered & Spaced */}
+          <div className="hidden md:flex space-x-12 items-center">
+            {links.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-sm uppercase tracking-[0.2em] font-medium relative hover:text-brand-gold transition-colors duration-300 ${
-                    scrolled ? "text-brand-dark" : "text-brand-dark"
-                }`}
+                className="group relative text-xs uppercase tracking-[0.2em] text-brand-dark hover:text-brand-gold transition-colors duration-300"
               >
                 {link.name}
-                {pathname === link.href && (
-                  <motion.div
-                    layoutId="underline"
-                    className="absolute -bottom-2 left-0 w-full h-[1px] bg-brand-gold"
-                  />
-                )}
+                {/* Gold Underline Animation */}
+                <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-brand-gold transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
-          </nav>
+            
+            {/* Call to Action Button */}
+            <Link href="/book" className="border border-brand-dark px-6 py-2 text-xs uppercase tracking-[0.2em] hover:bg-brand-dark hover:text-brand-cream transition-all duration-300">
+                Book Now
+            </Link>
+          </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden z-50 p-2 space-y-1.5"
-          >
-            <div className={`w-8 h-0.5 bg-brand-gold transition-transform ${mobileMenuOpen ? "rotate-45 translate-y-2" : ""}`}></div>
-            <div className={`w-6 h-0.5 bg-brand-gold ml-auto transition-opacity ${mobileMenuOpen ? "opacity-0" : ""}`}></div>
-            <div className={`w-8 h-0.5 bg-brand-gold transition-transform ${mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}></div>
-          </button>
+          {/* Mobile Button */}
+          <div className="md:hidden flex items-center z-50">
+            <button onClick={() => setIsOpen(!isOpen)} className="text-brand-dark">
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
-      </header>
+      </div>
+    </nav>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: "-100%" }}
+    {/* Mobile Menu Overlay */}
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: "-100%" }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 bg-brand-cream z-40 flex flex-col items-center justify-center space-y-8"
-          >
-            {navLinks.map((link) => (
+        >
+            {links.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="font-serif text-4xl text-brand-dark hover:text-brand-gold hover:italic transition-all"
+                onClick={() => setIsOpen(false)}
+                className="text-3xl font-serif text-brand-dark hover:text-brand-gold italic"
               >
                 {link.name}
               </Link>
             ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+             <Link href="/book" onClick={() => setIsOpen(false)} className="mt-8 bg-brand-dark text-brand-cream px-8 py-3 uppercase tracking-widest text-sm">
+                Book Appointment
+            </Link>
+        </motion.div>
+      )}
+    </AnimatePresence>
     </>
   );
 }
