@@ -1,4 +1,4 @@
-// src/app/admin/dashboard/page.js (UPGRADED with UX improvements)
+// src/app/admin/dashboard/page.js (UPGRADED)
 
 "use client";
 import { useState, useEffect } from "react";
@@ -7,61 +7,36 @@ import { db, auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
 import { Trash2, Plus, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
-
-// --- Loading Skeleton Component ---
-const TableSkeleton = () => (
-    <div className="bg-white dark:bg-brand-charcoal rounded shadow overflow-hidden animate-pulse">
-        <div className="p-4 bg-gray-100 dark:bg-brand-dark/50 border-b border-brand-gold/50 h-12"></div>
-        {[...Array(5)].map((_, i) => (
-            <div key={i} className="flex items-center p-4 border-b border-gray-100 dark:border-brand-dark">
-                <div className="w-12 h-12 bg-gray-200 dark:bg-brand-dark/30 rounded shadow-sm mr-4"></div>
-                <div className="flex-grow space-y-2">
-                    <div className="h-4 bg-gray-200 dark:bg-brand-dark/30 w-3/4 rounded"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-brand-dark/30 w-1/2 rounded"></div>
-                </div>
-            </div>
-        ))}
-    </div>
-);
-// --- End Skeleton ---
+import { useAuth } from "@/context/AuthContext"; // <-- NEW IMPORT
 
 export default function Dashboard() {
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuth(); // <-- GET AUTH STATE
   const [styles, setStyles] = useState([]);
-  // Separate loading state for DATA fetch, distinct from auth loading
-  const [dataLoading, setDataLoading] = useState(true); 
   const [newStyle, setNewStyle] = useState({ name: "", price: "", description: "", imageUrl: "", featured: false });
   const [isAdding, setIsAdding] = useState(false);
   const router = useRouter();
 
-  // --- AUTHENTICATION & DATA FETCH EFFECT ---
+  // --- AUTHENTICATION CHECK EFFECT ---
   useEffect(() => {
-    // 1. If loading auth state, wait.
+    // 1. If loading, do nothing (wait for auth context to finish checking)
     if (loading) return; 
 
-    // 2. If not authenticated, redirect to login
+    // 2. If NOT loading and user is NULL, redirect to login
     if (!user) {
       router.push("/admin/login");
       return;
     }
     
-    // 3. If authenticated, fetch data and start real-time listener
+    // 3. If NOT loading and user EXISTS, subscribe to data
     const unsubscribe = onSnapshot(collection(db, "styles"), (snapshot) => {
       setStyles(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-      setDataLoading(false); // Data finished loading
-    }, (error) => {
-        console.error("Firebase read error:", error);
-        setDataLoading(false); // Stop loading even if error occurs
-        toast.error("Failed to load styles.");
     });
     
-    // Cleanup listener on unmount
+    // Cleanup function runs on unmount or when dependencies change
     return () => unsubscribe();
-  }, [user, loading, router]); 
+  }, [user, loading, router]); // Dependency array ensures reruns on state change
 
   // Data Handlers (handleAdd, handleDelete, toggleFeatured, handleLogout remain the same)
-  // ... (Your handleAdd, handleDelete, toggleFeatured, handleLogout functions are included here) ...
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -97,19 +72,19 @@ export default function Dashboard() {
       router.push("/admin/login");
   }
 
+  // --- Render logic based on authentication status ---
 
-  // --- Render logic based on authentication and data status ---
-
-  // If loading the *initial* auth status, show the context loader
+  // If loading, show the loader (it's already handled by AuthContext, but a fallback is safe)
   if (loading) {
     return (
-      <div className="h-screen w-full flex items-center justify-center bg-brand-cream dark:bg-brand-dark">
+      <div className="h-screen w-full flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-brand-gold"></div>
       </div>
     );
   }
 
-  // If not authenticated, the useEffect hook will handle the redirect.
+  // If not loading and no user, we rely on the useEffect redirect above. 
+  // This return block ensures we don't try to render the dashboard while waiting for the redirect.
   if (!user) {
     return null; 
   }
@@ -140,10 +115,10 @@ export default function Dashboard() {
         {isAdding && (
           <form onSubmit={handleAdd} className="bg-white dark:bg-brand-charcoal p-6 rounded shadow mb-8 border border-brand-gold transition-colors">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input required placeholder="Style Name" className="border p-3 rounded dark:bg-brand-dark dark:text-brand-cream dark:border-brand-charcoal focus:ring-brand-gold focus:border-brand-gold" value={newStyle.name} onChange={e => setNewStyle({...newStyle, name: e.target.value})} />
-                  <input required placeholder="Price (Numbers only)" type="number" className="border p-3 rounded dark:bg-brand-dark dark:text-brand-cream dark:border-brand-charcoal focus:ring-brand-gold focus:border-brand-gold" value={newStyle.price} onChange={e => setNewStyle({...newStyle, price: e.target.value})} />
-                  <input required placeholder="Image URL (https://...)" type="url" className="border p-3 rounded col-span-2 dark:bg-brand-dark dark:text-brand-cream dark:border-brand-charcoal focus:ring-brand-gold focus:border-brand-gold" value={newStyle.imageUrl} onChange={e => setNewStyle({...newStyle, imageUrl: e.target.value})} />
-                  <textarea required placeholder="Description" className="border p-3 rounded col-span-2 dark:bg-brand-dark dark:text-brand-cream dark:border-brand-charcoal focus:ring-brand-gold focus:border-brand-gold" value={newStyle.description} onChange={e => setNewStyle({...newStyle, description: e.target.value})} />
+                  <input required placeholder="Style Name" className="border p-3 rounded dark:bg-brand-dark dark:text-brand-cream dark:border-brand-charcoal" value={newStyle.name} onChange={e => setNewStyle({...newStyle, name: e.target.value})} />
+                  <input required placeholder="Price (Numbers only)" type="number" className="border p-3 rounded dark:bg-brand-dark dark:text-brand-cream dark:border-brand-charcoal" value={newStyle.price} onChange={e => setNewStyle({...newStyle, price: e.target.value})} />
+                  <input required placeholder="Image URL (https://...)" type="url" className="border p-3 rounded col-span-2 dark:bg-brand-dark dark:text-brand-cream dark:border-brand-charcoal" value={newStyle.imageUrl} onChange={e => setNewStyle({...newStyle, imageUrl: e.target.value})} />
+                  <textarea required placeholder="Description" className="border p-3 rounded col-span-2 dark:bg-brand-dark dark:text-brand-cream dark:border-brand-charcoal" value={newStyle.description} onChange={e => setNewStyle({...newStyle, description: e.target.value})} />
                   <label className="flex items-center gap-2 cursor-pointer text-brand-dark dark:text-brand-cream">
                       <input type="checkbox" checked={newStyle.featured} onChange={e => setNewStyle({...newStyle, featured: e.target.checked})} className="w-4 h-4 text-brand-gold border-gray-300 rounded focus:ring-brand-gold"/>
                       Make Featured on Home Page
@@ -153,40 +128,35 @@ export default function Dashboard() {
           </form>
         )}
 
-        {/* Display Skeleton while data is loading */}
-        {dataLoading ? (
-            <TableSkeleton />
-        ) : (
-            <div className="bg-white dark:bg-brand-charcoal rounded shadow overflow-hidden">
-                <table className="w-full text-left">
-                    <thead className="bg-gray-100 dark:bg-brand-dark/50 border-b border-brand-gold/50">
-                        <tr>
-                            <th className="p-4 text-brand-dark dark:text-brand-gold">Image</th>
-                            <th className="p-4 text-brand-dark dark:text-brand-gold">Name</th>
-                            <th className="p-4 text-brand-dark dark:text-brand-gold">Price</th>
-                            <th className="p-4 text-brand-dark dark:text-brand-gold">Featured</th>
-                            <th className="p-4 text-brand-dark dark:text-brand-gold">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {styles.map(style => (
-                            <tr key={style.id} className="border-b border-gray-100 dark:border-brand-dark hover:bg-gray-50 dark:hover:bg-brand-dark/50 transition-colors">
-                                <td className="p-4"><img src={style.imageUrl} className="w-12 h-12 object-cover rounded shadow-sm" alt="" /></td>
-                                <td className="p-4 font-medium text-brand-dark dark:text-brand-cream">{style.name}</td>
-                                <td className="p-4 text-brand-dark dark:text-brand-cream">₦{style.price?.toLocaleString()}</td>
-                                <td className="p-4">
-                                    <input type="checkbox" checked={style.featured} onChange={() => toggleFeatured(style)} className="cursor-pointer text-brand-gold focus:ring-brand-gold"/>
-                                </td>
-                                <td className="p-4 text-red-500 hover:text-red-700 cursor-pointer transition-colors" onClick={() => handleDelete(style.id)}>
-                                    <Trash2 size={18} />
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {styles.length === 0 && <p className="p-8 text-center text-gray-500 dark:text-brand-charcoal">No styles added yet.</p>}
-            </div>
-        )}
+        <div className="bg-white dark:bg-brand-charcoal rounded shadow overflow-hidden">
+          <table className="w-full text-left">
+              <thead className="bg-gray-100 dark:bg-brand-dark/50 border-b border-brand-gold/50">
+                  <tr>
+                      <th className="p-4 text-brand-dark dark:text-brand-gold">Image</th>
+                      <th className="p-4 text-brand-dark dark:text-brand-gold">Name</th>
+                      <th className="p-4 text-brand-dark dark:text-brand-gold">Price</th>
+                      <th className="p-4 text-brand-dark dark:text-brand-gold">Featured</th>
+                      <th className="p-4 text-brand-dark dark:text-brand-gold">Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {styles.map(style => (
+                      <tr key={style.id} className="border-b border-gray-100 dark:border-brand-dark hover:bg-gray-50 dark:hover:bg-brand-dark/50 transition-colors">
+                          <td className="p-4"><img src={style.imageUrl} className="w-12 h-12 object-cover rounded shadow-sm" alt="" /></td>
+                          <td className="p-4 font-medium text-brand-dark dark:text-brand-cream">{style.name}</td>
+                          <td className="p-4 text-brand-dark dark:text-brand-cream">₦{style.price?.toLocaleString()}</td>
+                          <td className="p-4">
+                              <input type="checkbox" checked={style.featured} onChange={() => toggleFeatured(style)} className="cursor-pointer text-brand-gold focus:ring-brand-gold"/>
+                          </td>
+                          <td className="p-4 text-red-500 hover:text-red-700 cursor-pointer transition-colors" onClick={() => handleDelete(style.id)}>
+                              <Trash2 size={18} />
+                          </td>
+                      </tr>
+                  ))}
+              </tbody>
+          </table>
+          {styles.length === 0 && <p className="p-8 text-center text-gray-500 dark:text-brand-charcoal">No styles added yet.</p>}
+        </div>
       </div>
     </div>
   );
