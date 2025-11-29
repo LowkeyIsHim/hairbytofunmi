@@ -1,6 +1,7 @@
+// tailwind.config.js (NEW LUXURY PALETTE)
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // Ensure 'class' mode is enabled for Dark Mode switching
   darkMode: 'class', 
   content: [
   "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,21 +11,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // --- VVIP Luxury Palette (Existing) ---
-        'brand-dark': '#121212',       // Deep Charcoal / Near Black
-        'brand-cream': '#FAF9F6',      // Off-White / Ivory Base
-        'brand-gold': '#C5A059',       // Champagne/Antique Gold Accent
-        'brand-charcoal': '#444444',   // Muted Dark Text/Accent
-        // --- Added for Logo/Signature Clarity ---
-        'logo-primary': '#121212',     // Primary text color (Dark Mode will handle the cream switch)
-        'logo-accent': '#C5A059',      // Gold accent for icon/hover
+        // --- NEW RICH SAPPHIRE & GOLD LUXURY PALETTE ---
+        'brand-primary': '#0D0D1F',     // Deep Sapphire / Near Black for background
+        'brand-secondary': '#A58B5C',   // Rich, Antique Gold for accents
+        'brand-text': '#F7F4EB',        // Off-White/Ivory for readability
+        'brand-muted': '#7B7B8F',       // Muted Grey-Blue for subtext/borders
+        
+        // Aliases for Logo (Uses new palette)
+        'logo-primary': '#0D0D1F',
+        'logo-accent': '#A58B5C',
       },
-      // You can also extend typography styles here if needed later
       fontFamily: {
         playfair: ['var(--font-playfair)'],
         lato: ['var(--font-lato)'],
-        // --- Added for Signature Logo ---
-        signature: ['var(--font-playfair)', 'serif'], // Use the elegant Playfair font for the signature look
+        // Signature remains Playfair
+        signature: ['var(--font-playfair)', 'serif'], 
       },
       // Optional: Add slow zoom for Hero Image parallax effect
       keyframes: {
