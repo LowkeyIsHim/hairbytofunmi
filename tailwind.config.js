@@ -11,8 +11,9 @@ module.exports = {
     extend: {
       // --- 1. Color Palette Expansion ---
       colors: {
-        // --- ADDED: Utilities that reference your CSS Variables ---
-        // These generate classes like bg-background, ring-offset-background, etc.
+        // --- FIX 1: ADDED DYNAMIC BACKGROUND/FOREGROUND UTILITIES ---
+        // This generates classes like bg-background, text-background, ring-offset-background, etc.
+        // The '<alpha-value>' placeholder ensures opacity utilities work (e.g., bg-background/50)
         'background': 'rgb(var(--background-rgb) / <alpha-value>)',
         'foreground': 'rgb(var(--foreground-rgb) / <alpha-value>)',
         
@@ -34,13 +35,15 @@ module.exports = {
           'dark': '#2A2A2A',           
         },
         
-        // --- Surface Colors (For structured backgrounds/cards/modals) ---
+        // --- Surface Colors (Structured for background/cards/modals) ---
+        // This generates classes like bg-surface-subtle-light and bg-surface-subtle-dark.
         'surface': {
-          'light': '#FFFFFF',          
-          'dark': '#1E1E1E',           
-          'subtle-light': '#F3F2F0',   
-          'subtle-dark': '#2A2A2A',    
+            'light': '#FFFFFF',          
+            'dark': '#1E1E1E',           
+            'subtle-light': '#F3F2F0',   
+            'subtle-dark': '#2A2A2A',    
         },
+        // --- End of Surface Colors ---
 
         // --- Logo/Signature Clarity (Existing) ---
         'logo-primary': '#121212',     
