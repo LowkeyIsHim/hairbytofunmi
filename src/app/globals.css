@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* -------------------------------------------------- */
+/* ---------------------------------------------------- */
 /* ## 1. CSS VARIABLES & BASE SETUP (Richer Colors) */
 /* ---------------------------------------------------- */
 
@@ -113,13 +113,14 @@ a:hover {
 
 /* Focus State Enhancement: Use the custom gold glow shadow */
 :focus-visible {
+    /* FIX 1 APPLIED: ring-offset-background now exists via tailwind.config.js */
     @apply outline-none ring-2 ring-brand-gold ring-offset-2 ring-offset-background;
 }
 
 /* --- BUTTON COMPONENTS (Sleek, Modern Wipe Style) --- */
 
 .btn-primary {
-  /* Apply custom spacing utilities (e.g., px-8 py-4 is preserved) and gold border shade */
+  /* Apply custom spacing utilities and gold border shade */
   @apply relative inline-flex items-center justify-center 
          px-8 py-4 overflow-hidden font-medium 
          tracking-widest uppercase 
@@ -130,7 +131,6 @@ a:hover {
 
 .btn-primary-base {
     /* Base text is Dark in Light mode, Cream in Dark mode */
-    /* text-brand-dark is rgb(var(--color-primary)) in light mode */
     @apply text-[rgb(var(--foreground-rgb))] bg-transparent;
 }
 
@@ -169,6 +169,6 @@ a:hover {
 
 /* Defines a generic card/surface with subtle background and shadow */
 .card-surface {
-    /* Uses the subtle surface colors and the custom subtle shadow */
-    @apply bg-surface-subtle shadow-luxury-sm rounded-lg p-6;
+    /* FIX 2 APPLIED: Use the correctly generated light/dark utilities */
+    @apply bg-surface-subtle-light dark:bg-surface-subtle-dark shadow-luxury-sm rounded-lg p-6;
 }
