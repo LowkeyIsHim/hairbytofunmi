@@ -1,22 +1,21 @@
-/* src/app/globals.css */
-
+/* src/app/globals.css (UPDATED) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* * CSS Variables for Background/Foreground. 
-* These should mirror the brand-cream and brand-dark colors for consistency.
+* Uses NEW Deep Sapphire & Gold Palette.
 */
 :root {
-  /* Light Mode */
-  --foreground-rgb: 18, 18, 18;       /* brand-dark (#121212) */
-  --background-rgb: 250, 249, 246;    /* brand-cream (#FAF9F6) */
+  /* Light Mode (Often used in Nav/Modal) */
+  --foreground-rgb: 13, 13, 31;     /* brand-primary (Deep Sapphire) */
+  --background-rgb: 247, 244, 235;  /* brand-text (Off-White/Ivory) */
 }
 
 .dark {
-  /* Dark Mode */
-  --foreground-rgb: 250, 249, 246;    /* brand-cream (#FAF9F6) */
-  --background-rgb: 18, 18, 18;       /* brand-dark (#121212) */
+  /* Dark Mode (Default body style) */
+  --foreground-rgb: 247, 244, 235;  /* brand-text (Off-White/Ivory) */
+  --background-rgb: 13, 13, 31;     /* brand-primary (Deep Sapphire) */
 }
 
 body {
@@ -25,19 +24,21 @@ body {
   font-family: var(--font-lato), sans-serif;
   -webkit-font-smoothing: antialiased; 
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh; 
+  min-height: 100vh;
+  /* Add smooth transitions to base colors for theme switching */
+  transition: background-color 0.5s, color 0.5s; 
 }
 
-/* Luxury Typography Utilities (Playfair for headings, Lato for body) */
+/* Luxury Typography Utilities */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair), serif;
   font-weight: 400; 
 }
 
-/* The Gold Text Effect - Enhanced for richer appearance */
+/* The Gold Text Effect - Enhanced for metallic, antique appearance */
 .text-gradient-gold {
-  /* Adjusted gradient for a more metallic, rich gold effect */
-  background: linear-gradient(90deg, #9D743D 0%, #EBC38A 50%, #9D743D 100%);
+  /* Uses the new Gold palette */
+  background: linear-gradient(90deg, #816E4F 0%, #C8B07E 50%, #816E4F 100%); 
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -51,37 +52,34 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Custom Selection Color - Matches Brand Gold */
 ::selection {
-  background: #C5A059; /* brand-gold */
-  color: #121212; /* brand-dark */
+  background: #A58B5C; /* brand-secondary (Gold) */
+  color: #0D0D1F; /* brand-primary (Sapphire) */
 }
 
-/* --- BUTTON COMPONENTS (Sleek, Modern Wipe Style) --- */
-/* The parent must have the 'group' class applied in JSX */
+/* --- BUTTON COMPONENTS (Premium, Gold-Inlay Style) --- */
 
 .btn-primary {
-  /* Define core button appearance using the luxury palette */
+  /* Base button container */
   @apply relative inline-flex items-center justify-center 
          px-8 py-4 overflow-hidden font-medium 
          tracking-widest uppercase 
          transition duration-500 ease-out 
-         shadow-md 
-         border border-brand-gold; /* Use Gold border for definition */
+         shadow-lg 
+         border border-brand-secondary; /* Gold outline */
 }
 
-/* Base colors for the button content (Text and Background) */
 .btn-primary-base {
-    /* Base text is Cream in Dark mode, Dark in Light mode */
-    @apply text-brand-dark dark:text-brand-cream bg-transparent;
+    /* Default appearance: Sapphire background, Gold text */
+    @apply text-brand-secondary bg-brand-primary; 
 }
 
 /* The inner span that acts as the wipe animation */
 .btn-primary-wipe {
   @apply absolute inset-0 transform 
          transition-transform duration-500 ease-in-out 
-         bg-brand-gold 
-         scale-x-0 origin-left; /* Setup for left-to-right wipe */
+         bg-brand-secondary 
+         scale-x-0 origin-left; /* Left-to-right Gold wipe */
 }
 
 /* The content span that stays visible */
@@ -93,15 +91,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Wipe animation */
 .group:hover .btn-primary-wipe {
-  @apply scale-x-100; /* Wipe effect: scale the gold background to full width */
+  @apply scale-x-100; /* Gold wipe fills the button */
 }
 
 /* Content color change on hover */
 .group:hover .btn-primary-content {
-  @apply text-brand-dark; /* Text changes to dark when gold wipe is complete */
-}
-
-/* Optional: Subtle lift on hover */
-.group:hover .btn-primary {
-    @apply shadow-lg transform translate-y-[-2px];
+  /* Text changes to Sapphire (dark) when gold wipe is complete */
+  @apply text-brand-primary; 
 }
