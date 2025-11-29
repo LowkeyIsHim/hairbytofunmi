@@ -1,20 +1,21 @@
-// src/components/Navbar.js (FIXED & CLEANED)
+// src/components/Navbar.js (Updated)
 
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
-import ThemeSwitch from "./ThemeSwitch";
+import ThemeSwitch from "./ThemeSwitch"; // <-- NEW IMPORT
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-// Removed usePathname import and usage since LayoutWrapper handles visibility
 
 export default function Navbar() {
+  // ... (useState, useEffect, links array remain the same) ...
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  // const pathname = usePathname(); <--- REMOVED
+  const pathname = usePathname();
 
-  // if (pathname.includes('/admin')) return null; <--- REMOVED
+  if (pathname.includes('/admin')) return null;
 
   // Handle scroll effect
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu - Centered & Spaced */}
-          <div className="hidden md:flex space-x-8 items-center">
+          <div className="hidden md:flex space-x-8 items-center"> {/* Reduced space-x to fit ThemeSwitch */}
             {links.map((link) => (
               <Link
                 key={link.name}
