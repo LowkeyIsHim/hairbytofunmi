@@ -2,40 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * CSS Variables for Background/Foreground. 
-* These should mirror the brand-cream and brand-dark colors for consistency.
-*/
+/* ---------------------------------------------------- */
+/* ## 1. CSS VARIABLES & BASE SETUP (Richer Colors) */
+/* ---------------------------------------------------- */
+
+/* VVIP Color Palette Mapped to CSS Variables for flexible use */
 :root {
-  /* Light Mode */
-  --foreground-rgb: 18, 18, 18;       /* brand-dark (#121212) */
-  --background-rgb: 250, 249, 246;    /* brand-cream (#FAF9F6) */
+  /* Light Mode Core */
+  --color-primary: 18, 18, 18;       /* brand-dark (#121212) */
+  --color-secondary: 250, 249, 246;    /* brand-cream (#FAF9F6) */
+  
+  /* Color Shades (Mapped from tailwind.config.js) */
+  --color-gold: #C5A059;
+  --color-gold-hover: #D6C097; /* brand-gold-light */
+  --color-charcoal-subtle: #666666; /* brand-charcoal-light */
+  
+  /* Surfaces */
+  --color-surface: 255, 255, 255;      /* surface-light */
+  --color-surface-subtle: 243, 242, 240; /* surface-subtle-light */
+
+  /* Global Body Background/Foreground */
+  --foreground-rgb: var(--color-primary);
+  --background-rgb: var(--color-secondary);
 }
 
 .dark {
-  /* Dark Mode */
-  --foreground-rgb: 250, 249, 246;    /* brand-cream (#FAF9F6) */
-  --background-rgb: 18, 18, 18;       /* brand-dark (#121212) */
+  /* Dark Mode Core */
+  --color-primary: 250, 249, 246;    /* brand-cream (#FAF9F6) */
+  --color-secondary: 18, 18, 18;       /* brand-dark (#121212) */
+
+  /* Color Shades (Mapped from tailwind.config.js) */
+  --color-gold: #C5A059;
+  --color-gold-hover: #A07E44; /* brand-gold-dark */
+  --color-charcoal-subtle: #444444; /* brand-charcoal */
+  
+  /* Surfaces */
+  --color-surface: 30, 30, 30;      /* surface-dark (#1E1E1E) */
+  --color-surface-subtle: 42, 42, 42; /* surface-subtle-dark (#2A2A2A) */
+
+  /* Global Body Background/Foreground */
+  --foreground-rgb: var(--color-primary);
+  --background-rgb: var(--color-secondary);
 }
 
+/* Base Body Styling */
 body {
+  /* Applying colors via CSS variables */
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-rgb));
-  font-family: var(--font-lato), sans-serif;
-  -webkit-font-smoothing: antialiased; 
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
+  
+  /* Applying fonts from tailwind config */
+  @apply font-lato antialiased min-h-screen; 
 }
 
-/* Luxury Typography Utilities (Playfair for headings, Lato for body) */
+/* ---------------------------------------------------- */
+/* ## 2. TYPOGRAPHY & TEXT UTILITIES */
+/* ---------------------------------------------------- */
+
+/* Luxury Typography Utilities (Playfair for headings) */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair), serif;
-  font-weight: 400; 
+  /* Apply font-playfair utility and a base weight */
+  @apply font-playfair font-normal; 
 }
 
-/* The Gold Text Effect - Enhanced for richer appearance */
+/* Define a small utility for subtle, secondary text */
+.text-subtle {
+    /* Uses the lighter charcoal shade */
+    @apply text-brand-charcoal-light dark:text-brand-charcoal; 
+}
+
+/* Base Link Styling */
+a {
+    /* Use the gold as a subtle accent and apply a transition */
+    @apply text-inherit transition-colors duration-300;
+}
+
+a:hover {
+    /* Subtle hover to gold */
+    @apply text-brand-gold;
+}
+
+/* The Gold Text Effect - Enhanced for metallic appearance */
 .text-gradient-gold {
-  /* Adjusted gradient for a more metallic, rich gold effect */
-  background: linear-gradient(90deg, #9D743D 0%, #EBC38A 50%, #9D743D 100%);
+  /* Use CSS variable for a defined gold color in the gradient */
+  background: linear-gradient(90deg, #9D743D 0%, var(--color-gold) 50%, #9D743D 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -51,34 +101,46 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Custom Selection Color - Matches Brand Gold */
 ::selection {
-  background: #C5A059; /* brand-gold */
-  color: #121212; /* brand-dark */
+  /* Use the defined gold color variable */
+  background: var(--color-gold);
+  /* Ensure text color contrasts well */
+  color: rgb(var(--foreground-rgb)); 
+}
+
+/* ---------------------------------------------------- */
+/* ## 3. BUTTON & FOCUS STYLES (Component Richness) */
+/* ---------------------------------------------------- */
+
+/* Focus State Enhancement: Use the custom gold glow shadow */
+:focus-visible {
+    @apply outline-none ring-2 ring-brand-gold ring-offset-2 ring-offset-background;
 }
 
 /* --- BUTTON COMPONENTS (Sleek, Modern Wipe Style) --- */
 
 .btn-primary {
-  /* Define core button appearance using the luxury palette */
+  /* Apply custom spacing utilities (e.g., px-8 py-4 is preserved) and gold border shade */
   @apply relative inline-flex items-center justify-center 
          px-8 py-4 overflow-hidden font-medium 
          tracking-widest uppercase 
          transition duration-500 ease-out 
-         shadow-md 
-         border border-brand-gold; /* Use Gold border for definition */
+         shadow-luxury-md /* Use the custom shadow */
+         border border-brand-gold; 
 }
 
-/* Base colors for the button content (Text and Background) */
 .btn-primary-base {
-    /* Base text is Cream in Dark mode, Dark in Light mode */
-    @apply text-brand-dark dark:text-brand-cream bg-transparent;
+    /* Base text is Dark in Light mode, Cream in Dark mode */
+    /* text-brand-dark is rgb(var(--color-primary)) in light mode */
+    @apply text-[rgb(var(--foreground-rgb))] bg-transparent;
 }
 
 /* The inner span that acts as the wipe animation */
 .btn-primary-wipe {
+  /* Use the specific gold color utility */
   @apply absolute inset-0 transform 
          transition-transform duration-500 ease-in-out 
          bg-brand-gold 
-         scale-x-0 origin-left; /* Setup for left-to-right wipe */
+         scale-x-0 origin-left; 
 }
 
 /* The content span that stays visible */
@@ -87,18 +149,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Hover Effects */
-
-/* Wipe animation */
 .group:hover .btn-primary-wipe {
-  @apply scale-x-100; /* Wipe effect: scale the gold background to full width */
+  @apply scale-x-100; 
 }
 
-/* Content color change on hover */
 .group:hover .btn-primary-content {
-  @apply text-brand-dark; /* Text changes to dark when gold wipe is complete */
+  /* Text changes to brand-dark when gold wipe is complete */
+  @apply text-brand-dark; 
 }
 
-/* Optional: Subtle lift on hover */
 .group:hover .btn-primary {
-    @apply shadow-lg transform translate-y-[-2px];
+    /* Use custom gold glow on hover for a premium effect */
+    @apply shadow-gold-glow-lg transform -translate-y-px; 
+}
+
+/* ---------------------------------------------------- */
+/* ## 4. UTILITY FOR CARD/SURFACE ELEMENTS */
+/* ---------------------------------------------------- */
+
+/* Defines a generic card/surface with subtle background and shadow */
+.card-surface {
+    /* Uses the subtle surface colors and the custom subtle shadow */
+    @apply bg-surface-subtle shadow-luxury-sm rounded-lg p-6;
 }
