@@ -1,17 +1,19 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, setLogLevel } from 'firebase/firestore';
 
-// IMPORTANT: In this environment, we must use the global variable __firebase_config
-// instead of process.env variables for initialization.
+// IMPORTANT: We use the global variable __firebase_config for all necessary 
+// API keys and configurations, as provided by the hosting environment.
 const firebaseConfig = typeof __firebase_config !== 'undefined' 
     ? JSON.parse(__firebase_config) 
     : {};
 
-// Firebase initialization is simplified as we don't need the getApps() check 
-// in this environment's React setup, and the app is handled within the context.
-const app = initializeApp(firebaseConfig);
+// Initialize the Firebase app, or use the existing one if it exists
+const app = !getApps().length 
+    ? initializeApp(firebaseConfig) 
+    : getApp();
 
+// Initialize the services
 const auth = getAuth(app);
 const db = getFirestore(app);
 
