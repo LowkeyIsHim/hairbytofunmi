@@ -1,4 +1,4 @@
-// src/app/admin/dashboard/page.js (UPGRADED)
+// src/app/admin/dashboard/page.js (FIXED)
 
 "use client";
 import { useState, useEffect } from "react";
@@ -7,37 +7,48 @@ import { db, auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
 import { Trash2, Plus, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext"; // <-- NEW IMPORT
+import { useAuth } from "@/context/AuthContext";
 
 export default function Dashboard() {
-  const { user, loading } = useAuth(); // <-- GET AUTH STATE
+  const { user, loading } = useAuth();
   const [styles, setStyles] = useState([]);
   const [newStyle, setNewStyle] = useState({ name: "", price: "", description: "", imageUrl: "", featured: false });
   const [isAdding, setIsAdding] = useState(false);
   const router = useRouter();
 
-  // --- AUTHENTICATION CHECK EFFECT ---
+  // --- EARLY AUTHENTICATION CHECK & REDIRECT ---
+  // If loading, the AuthContext provider handles the spinner.
+  // If not loading and NO user, redirect immediately using the router.
+  if (!loading && !user) {
+    // This executes during render, guaranteeing the redirect before rendering the dashboard content.
+    router.push("/admin/login");
+    return null; // Stop rendering the rest of the component
+  }
+  
+  // If loading, we also return null here, letting the AuthContext handle the loader UI
+  if (loading) {
+    return null;
+  }
+  
+  // If we reach here, loading is false AND user is present.
+  
+  // --- DATA SUBSCRIPTION EFFECT ---
   useEffect(() => {
-    // 1. If loading, do nothing (wait for auth context to finish checking)
-    if (loading) return; 
-
-    // 2. If NOT loading and user is NULL, redirect to login
-    if (!user) {
-      router.push("/admin/login");
-      return;
+    // We only subscribe to data if the user is present
+    if (user) {
+        const unsubscribe = onSnapshot(collection(db, "styles"), (snapshot) => {
+            setStyles(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        });
+        
+        // Cleanup function runs on unmount
+        return () => unsubscribe();
     }
-    
-    // 3. If NOT loading and user EXISTS, subscribe to data
-    const unsubscribe = onSnapshot(collection(db, "styles"), (snapshot) => {
-      setStyles(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-    });
-    
-    // Cleanup function runs on unmount or when dependencies change
-    return () => unsubscribe();
-  }, [user, loading, router]); // Dependency array ensures reruns on state change
+    // No need to include [user, loading, router] in the dependency array
+    // because we handle the redirects and loading status outside of useEffect.
+    // The component only reaches this point if (user && !loading) is true.
+  }, [user]); 
 
   // Data Handlers (handleAdd, handleDelete, toggleFeatured, handleLogout remain the same)
-
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
@@ -70,23 +81,6 @@ export default function Dashboard() {
   const handleLogout = () => {
       auth.signOut();
       router.push("/admin/login");
-  }
-
-  // --- Render logic based on authentication status ---
-
-  // If loading, show the loader (it's already handled by AuthContext, but a fallback is safe)
-  if (loading) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-brand-gold"></div>
-      </div>
-    );
-  }
-
-  // If not loading and no user, we rely on the useEffect redirect above. 
-  // This return block ensures we don't try to render the dashboard while waiting for the redirect.
-  if (!user) {
-    return null; 
   }
 
 
