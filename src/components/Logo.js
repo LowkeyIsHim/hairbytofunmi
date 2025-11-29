@@ -1,54 +1,60 @@
-// src/components/Logo.js (UPGRADED LOGO)
 import Link from 'next/link';
 
 /**
  * A sophisticated logo featuring a custom brand icon and the elegant signature text.
- * Uses the new rich Sapphire and Gold palette.
+ * Uses the custom 'signature' font and VVIP brand colors from tailwind.config.js.
  */
 const Logo = ({ className = '' }) => {
-
-  const iconColor = '#A58B5C'; // brand-secondary (Gold)
-  // Text color is primary in dark mode, and dark in light mode (for contrast on light navbar/modal)
-  const textColor = 'text-brand-primary dark:text-brand-text'; 
+  const iconFillColor = '#A37A4B'; // brand-gold
+  const textColor = 'text-brand-dark dark:text-brand-cream'; 
+  const textHoverAccent = 'hover:text-logo-accent dark:hover:text-logo-accent'; 
 
   return (
-    // The logo group itself
     <div className={`flex items-center ${className}`}>
       <Link 
         href="/" 
         className="group flex items-center space-x-2 transition-opacity duration-300 hover:opacity-90"
+        aria-label="Hair by Tofunmi Home"
       >
         
-        {/* 1. Brand Icon (Stylized Flow/Ribbon Icon) */}
-        <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
+        {/* 1. Brand Icon (Stylized 'H' Initial in a square frame) */}
+        <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 100 100"
             fill="none"
+            className="w-full h-full"
           >
-            {/* Elegant Flowing Lines in Gold */}
-            <path 
-                d="M 20 50 C 35 30, 65 30, 80 50 C 65 70, 35 70, 20 50 Z" 
-                stroke={iconColor} 
-                strokeWidth="4" 
-                fill="none" 
-            />
-             {/* Center dot/jewel accent */}
-            <circle cx="50" cy="50" r="5" fill={iconColor} />
+            {/* Elegant Square/Frame in Gold */}
+            <rect x="0" y="0" width="100" height="100" stroke={iconFillColor} strokeWidth="6" fill="none" />
+            
+            {/* Stylized 'H' Initial */}
+            <text 
+                x="50" 
+                y="68" // Adjusted y-position for better centering
+                fontFamily="serif" // General serif for compatibility
+                fontSize="60" 
+                fontWeight="bold" 
+                fill={iconFillColor}
+                textAnchor="middle" 
+                dominantBaseline="middle"
+            >
+                H
+            </text>
             
           </svg>
         </div>
 
-        {/* 2. Brand Signature Text (Slightly smaller, refined weight) */}
+        {/* 2. Brand Signature Text */}
         <span 
           className={`
             font-signature 
-            text-2xl sm:text-3xl lg:text-4xl 
-            font-light 
+            text-3xl sm:text-4xl lg:text-5xl 
+            font-extrabold 
             ${textColor} 
-            tracking-widest 
+            tracking-wide 
             transition-all duration-300
-            hover:text-logo-accent
+            ${textHoverAccent}
             p-1
           `}
         >
