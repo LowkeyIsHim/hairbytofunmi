@@ -1,3 +1,5 @@
+/* src/app/globals.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,9 +23,9 @@ body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-rgb));
   font-family: var(--font-lato), sans-serif;
-  -webkit-font-smoothing: antialiased; /* Crucial for premium font rendering */
+  -webkit-font-smoothing: antialiased; 
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh; /* Ensure body takes up full height */
+  min-height: 100vh; 
 }
 
 /* Luxury Typography Utilities (Playfair for headings, Lato for body) */
@@ -56,6 +58,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- BUTTON COMPONENTS (Sleek, Modern Wipe Style) --- */
+/* The parent must have the 'group' class applied in JSX */
 
 .btn-primary {
   /* Define core button appearance using the luxury palette */
