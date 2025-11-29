@@ -2,14 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* * CSS Variables for Background/Foreground. 
+* These should mirror the brand-cream and brand-dark colors for consistency.
+*/
 :root {
-  --foreground-rgb: 18, 18, 18;
-  --background-rgb: 250, 249, 246; 
+  /* Light Mode */
+  --foreground-rgb: 18, 18, 18;       /* brand-dark (#121212) */
+  --background-rgb: 250, 249, 246;    /* brand-cream (#FAF9F6) */
 }
 
 .dark {
-  --foreground-rgb: 250, 249, 246;
-  --background-rgb: 18, 18, 18;
+  /* Dark Mode */
+  --foreground-rgb: 250, 249, 246;    /* brand-cream (#FAF9F6) */
+  --background-rgb: 18, 18, 18;       /* brand-dark (#121212) */
 }
 
 body {
@@ -18,17 +23,19 @@ body {
   font-family: var(--font-lato), sans-serif;
   -webkit-font-smoothing: antialiased; /* Crucial for premium font rendering */
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh; /* Ensure body takes up full height */
 }
 
-/* Luxury Typography Utilities */
+/* Luxury Typography Utilities (Playfair for headings, Lato for body) */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair), serif;
-  font-weight: 400; /* Luxury headers are often lighter, not bold */
+  font-weight: 400; 
 }
 
-/* The Gold Text Effect */
+/* The Gold Text Effect - Enhanced for richer appearance */
 .text-gradient-gold {
-  background: linear-gradient(to right, #b88746, #fdf5a6, #b88746);
+  /* Adjusted gradient for a more metallic, rich gold effect */
+  background: linear-gradient(90deg, #9D743D 0%, #EBC38A 50%, #9D743D 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -42,44 +49,56 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Custom Selection Color */
+/* Custom Selection Color - Matches Brand Gold */
 ::selection {
-  background: #C5A059;
-  color: white;
+  background: #C5A059; /* brand-gold */
+  color: #121212; /* brand-dark */
 }
 
-/* --- BUTTON COMPONENTS (Premium Style) --- */
+/* --- BUTTON COMPONENTS (Sleek, Modern Wipe Style) --- */
 
 .btn-primary {
   /* Define core button appearance using the luxury palette */
   @apply relative inline-flex items-center justify-center 
          px-8 py-4 overflow-hidden font-medium 
-         tracking-widest uppercase text-white 
-         transition duration-300 ease-out 
-         bg-brand-dark shadow-xl 
-         border border-transparent; /* Ensure a clean edge */
+         tracking-widest uppercase 
+         transition duration-500 ease-out 
+         shadow-md 
+         border border-brand-gold; /* Use Gold border for definition */
+}
+
+/* Base colors for the button content (Text and Background) */
+.btn-primary-base {
+    /* Base text is Cream in Dark mode, Dark in Light mode */
+    @apply text-brand-dark dark:text-brand-cream bg-transparent;
 }
 
 /* The inner span that acts as the wipe animation */
 .btn-primary-wipe {
   @apply absolute inset-0 transform 
-         transition-all duration-700 ease-out 
-         bg-brand-gold; /* Use the new metallic gold for the hover color */
+         transition-transform duration-500 ease-in-out 
+         bg-brand-gold 
+         scale-x-0 origin-left; /* Setup for left-to-right wipe */
 }
 
 /* The content span that stays visible */
 .btn-primary-content {
-  @apply relative z-10 text-center;
+  @apply relative z-10 text-center transition-colors duration-500;
 }
 
-/* The hover effect relies on the 'group-hover' class being on the parent element (in JSX). 
-   This CSS applies when the parent .btn-primary has the 'group-hover' state. */
+/* Hover Effects */
 
+/* Wipe animation */
 .group:hover .btn-primary-wipe {
-  @apply scale-y-0; /* Wipe effect: scale the gold background down to zero */
+  @apply scale-x-100; /* Wipe effect: scale the gold background to full width */
 }
 
-/* Optional: Subtle border on hover */
+/* Content color change on hover */
+.group:hover .btn-primary-content {
+  @apply text-brand-dark; /* Text changes to dark when gold wipe is complete */
+}
+
+/* Optional: Subtle lift on hover */
 .group:hover .btn-primary {
-  @apply border-brand-dark; 
+    @apply shadow-lg transform translate-y-[-2px];
 }
