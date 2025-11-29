@@ -1,5 +1,3 @@
-// src/app/page.js
-
 "use client";
 import { useEffect, useState } from "react";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
@@ -7,7 +5,7 @@ import { db } from "@/lib/firebase";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-// ADDED X HERE TO FIX THE MODAL ERROR
+// Importing all necessary icons
 import { Phone, CheckCircle, Diamond, Sparkles, Star, X } from "lucide-react"; 
 
 // VVIP Contact Details (Used for immediate CTAs)
@@ -18,38 +16,38 @@ const getWhatsAppUrl = (styleName, price) => {
     const message = encodeURIComponent(
         `Hello HairByTofunmi, I would like to book an appointment for the ${styleName} style, priced at ₦${price.toLocaleString()}. Please let me know your next availability. Thank you!`
     );
-    return `https://https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}?text=${message}`;
+    return `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}?text=${message}`;
 };
 
-// Placeholder data (remains the same)
+// Placeholder data with enhanced, premium write-ups
 const placeholderStyles = [
   { 
     id: 'p1', 
     name: 'The Butterfly Locs', 
-    price: 12000, 
+    price: 18000, 
     imageUrl: 'https://files.catbox.moe/307vwv.jpeg', 
-    description: 'Distressed texture meets effortless elegance. Lightweight and versatile.' 
+    description: 'An ethereal, lightweight installation featuring distressed texture and organic movement, designed for effortless elegance and lasting wear.' 
   },
   { 
     id: 'p2', 
-    name: 'Bespoke Knotless', 
-    price: 7000, 
+    name: 'Bespoke Knotless Braids', 
+    price: 15000, 
     imageUrl: 'https://files.catbox.moe/751jcs.jpeg', 
-    description: 'Tension-free installation designed for scalp health and natural flow.' 
+    description: 'Crafted for ultimate scalp comfort, these tension-free braids are installed with precision, ensuring natural flow and superior longevity.' 
   },
   { 
     id: 'p3', 
-    name: 'Parisian Curls', 
-    price: 10000, 
+    name: 'Parisian Curls Signature', 
+    price: 22000, 
     imageUrl: 'https://files.catbox.moe/hegokr.jpeg', 
-    description: 'Voluminous, silky curls braided to perfection for a glamorous finish.' 
+    description: 'Voluminous, silky soft curls braided to perfection. A glamorous, high-definition finish that exudes Parisian chic and modern luxury.' 
   },
 ];
 
 const commitmentPoints = [
-  { icon: Diamond, title: "Premium Products", description: "Only luxury, salon-grade hair care products are used." },
-  { icon: CheckCircle, title: "Precision Craftsmanship", description: "Every style is executed with meticulous attention to detail and care." },
-  { icon: Sparkles, title: "Exclusive Experience", description: "Private appointments and a tailored styling consultation." },
+  { icon: Diamond, title: "Exquisite Materials", description: "Sourced premium hair and only luxury, salon-grade care products are used for every service." },
+  { icon: CheckCircle, title: "Artisan Craftsmanship", description: "Every strand is laid with meticulous precision and care by a highly experienced stylist." },
+  { icon: Sparkles, title: "Tailored VVIP Experience", description: "Enjoy private, dedicated appointments and a styling consultation customized to your vision." },
 ];
 
 const testimonials = [
@@ -64,8 +62,8 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState(null); 
 
   useEffect(() => {
+    // --- Firebase fetch logic remains the same, using placeholder if necessary ---
     const fetchFeatured = async () => {
-      // ... (firebase fetch logic remains the same) ...
       try {
         const q = query(collection(db, "styles"), where("featured", "==", true), limit(3));
         const snapshot = await getDocs(q);
@@ -81,9 +79,9 @@ export default function Home() {
 
   // --- Component return starts here ---
   return (
-    <div className="w-full">
+    <div className="w-full bg-brand-cream dark:bg-brand-dark transition-colors duration-500">
       
-      {/* --- 1. HERO SECTION: EDITORIAL LAYOUT --- */}
+      {/* --- 1. HERO SECTION: MAX IMPACT --- */}
       <section className="relative h-screen w-full overflow-hidden flex items-center">
         {/* Parallax Background Image */}
         <div className="absolute inset-0 z-0">
@@ -92,16 +90,16 @@ export default function Home() {
             alt="Luxury Hair Styling" 
             fill 
             priority
-            className="object-cover opacity-80 dark:opacity-70 transition-opacity animate-slow-zoom" 
+            className="object-cover opacity-85 dark:opacity-75 transition-opacity animate-slow-zoom" 
           />
-          {/* Cinematic Gradient Overlay - Stronger Dark Mode Transition */}
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-cream/90 via-brand-cream/40 to-transparent dark:from-brand-dark/95 dark:via-brand-dark/60 transition-colors"></div>
+          {/* Cinematic Gradient Overlay - Stronger Dark Mode for Contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-cream/80 via-brand-cream/30 to-transparent dark:from-brand-dark/95 dark:via-brand-dark/50 transition-colors"></div>
         </div>
 
-        {/* Hero Content - Focused on Typography */}
+        {/* Hero Content */}
         <div className="relative z-10 container mx-auto px-6 pt-20">
           <div className="max-w-4xl">
-            {/* Sub-headline/Pre-title */}
+            {/* Sub-headline */}
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -109,50 +107,50 @@ export default function Home() {
               className="flex items-center gap-4 mb-4"
             >
               <div className="h-[1.5px] w-16 bg-brand-gold"></div>
-              <span className="text-brand-dark dark:text-brand-cream uppercase tracking-[0.3em] text-sm font-light">
+              <span className="text-brand-dark dark:text-brand-cream uppercase tracking-[0.3em] text-sm font-lato">
                 The Crown You Deserve
               </span>
             </motion.div>
 
-            {/* Main Headline - Larger and more impactful */}
+            {/* Main Headline - Largest Size */}
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="font-playfair text-7xl md:text-8xl lg:text-[10rem] text-brand-dark dark:text-brand-cream leading-[0.9] mb-8 transition-colors"
+              className="font-playfair text-7xl md:text-8xl lg:text-[10rem] text-brand-dark dark:text-brand-cream leading-[0.9] mb-8"
             >
-              Define Your <br />
+              **Define Your** <br />
               <span className="text-gradient-gold font-extrabold">Elegance.</span>
             </motion.h1>
 
-            {/* Introductory Paragraph */}
+            {/* Introductory Paragraph - Premium Copy */}
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.4 }}
-              className="text-lg md:text-xl text-brand-dark/90 dark:text-brand-cream/80 mb-12 max-w-lg font-lato leading-relaxed transition-colors pl-1"
+              className="text-lg md:text-xl text-brand-dark/90 dark:text-brand-cream/80 mb-12 max-w-lg font-lato leading-relaxed pl-1"
             >
-              Experience bespoke styling where precision meets luxury. 
-              **We don't just do hair; we craft your crown.**
+              Experience bespoke styling where **precision meets luxury**. 
+              We don't just do hair; we craft your signature crown with unparalleled care.
             </motion.p>
 
-            {/* CTAs - CORRECTED TO USE GLOBAL BUTTON STYLES */}
+            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-6 items-start sm:items-center"
+              className="flex flex-col sm:flex-row gap-6 items-start sm:items-center group" 
             >
               {/* PRIMARY CTA: WhatsApp Link - Using .btn-primary */}
               <a 
                 href={`https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn-primary btn-primary-base w-fit group" // ADDED group class here
+                className="btn-primary btn-primary-base w-fit" 
               >
                  <span className="btn-primary-wipe"></span>
                 <span className="btn-primary-content flex items-center gap-2 text-sm">
-                    <Phone size={16}/> Book Via WhatsApp
+                    <Phone size={16}/> Secure Your Appointment
                 </span>
               </a>
               
@@ -166,18 +164,18 @@ export default function Home() {
                       py-2 sm:py-0 font-lato
                     "
               >
-                View Service Menu
+                View **Artisan** Menu
               </Link>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* --- 2. VVIP COMMITMENT: GRID LAYOUT REFINEMENT --- */}
-      <section className="py-28 px-6">
+      {/* --- 2. VVIP COMMITMENT: REFINED STRUCTURE --- */}
+      <section className="py-28 px-6 bg-brand-cream dark:bg-brand-dark">
         <div className="container mx-auto">
             <h2 className="text-center text-5xl font-playfair text-brand-dark dark:text-brand-cream mb-16">
-                The Difference is **Artistry**
+                The **HairByTofunmi** Guarantee
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 divide-x divide-brand-charcoal/10 dark:divide-brand-cream/10 border-t border-b border-brand-charcoal/10 dark:border-brand-cream/10">
                 {commitmentPoints.map((point, index) => (
@@ -198,8 +196,97 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- 3. TESTIMONIAL SLIDER: EDITORIAL BLOCKQUOTE --- */}
-      <section className="py-24 px-6 bg-brand-dark transition-colors">
+      {/* --- 3. FEATURED COLLECTION: ELEVATED CARDS and HEADER --- */}
+      <section className="py-32 px-6 bg-brand-cream dark:bg-brand-dark">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+            <div>
+              <h2 className="text-5xl font-playfair text-brand-dark dark:text-brand-cream mb-4">Featured **Masterpieces**</h2>
+              <p className="text-brand-dark/70 dark:text-brand-cream/70 font-lato max-w-lg text-lg">
+                A selection of our most requested and meticulously crafted styles.
+              </p>
+            </div>
+            <Link href="/services" className="hidden md:block text-brand-dark dark:text-brand-cream border-b border-brand-gold pb-1 hover:text-brand-gold transition-colors uppercase text-sm tracking-widest font-lato">
+              View All Creations
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {featured.map((style, index) => (
+              <motion.div 
+                key={style.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="group relative" 
+              >
+                {/* Image Wrapper */}
+                <div 
+                    className="relative h-[450px] w-full overflow-hidden shadow-xl cursor-pointer border-2 border-brand-charcoal/10 dark:border-brand-cream/10"
+                    onClick={() => setSelectedImage(style)}
+                >
+                  <Image 
+                    src={style.imageUrl} 
+                    alt={style.name} 
+                    fill 
+                    className="object-cover transition-transform duration-1000 ease-in-out group-hover:scale-105"
+                  />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                    <div className="bg-brand-gold/90 p-4 rounded-full shadow-lg">
+                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#0A0A0A" className="w-6 h-6">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                        </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Card Text Info & CTA Wrapper */}
+                <div className="pt-8">
+                    <div className="flex justify-between items-end pb-4">
+                        <div>
+                            <h3 className="text-3xl font-playfair text-brand-dark dark:text-brand-cream group-hover:text-brand-gold transition-colors">{style.name}</h3>
+                            <p className="text-sm text-brand-charcoal dark:text-brand-cream/70 mt-2 max-w-[250px] font-lato">{style.description}</p>
+                        </div>
+                        <span className="text-2xl font-medium text-brand-gold">₦{style.price?.toLocaleString()}</span>
+                    </div>
+
+                    {/* Dedicated WhatsApp CTA Button */}
+                    <a 
+                        href={getWhatsAppUrl(style.name, style.price)}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="btn-primary btn-primary-base w-full group mt-4" 
+                    >
+                        <span className="btn-primary-wipe"></span>
+                        <span className="btn-primary-content flex items-center gap-2 justify-center text-sm">
+                            <Phone size={14}/> Book This **Masterpiece**
+                        </span>
+                    </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+           {/* View Full Menu Link (Mobile/Bottom) */}
+           <div className="mt-20 text-center md:hidden">
+            <Link href="/services" 
+                className="
+                  text-brand-dark dark:text-brand-cream 
+                  uppercase text-lg tracking-[0.2em] 
+                  border-b-2 border-brand-gold 
+                  pb-1 hover:text-brand-gold transition-colors font-bold font-lato
+                "
+            >
+               View All Creations
+            </Link>
+           </div>
+        </div>
+      </section>
+      
+      {/* --- 4. TESTIMONIAL SLIDER: HIGH CONTRAST --- */}
+      <section className="py-24 px-6 bg-brand-dark text-brand-cream">
         <div className="container mx-auto text-center">
             <div className="flex items-center justify-center mb-4">
                 {[...Array(5)].map((_, i) => (
@@ -233,97 +320,7 @@ export default function Home() {
         </div>
       </section>
 
-
-      {/* --- 4. FEATURED COLLECTION: ELEVATED CARDS --- */}
-      <section className="py-32 px-6">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-            <div>
-              <h2 className="text-5xl font-playfair text-brand-dark dark:text-brand-cream mb-4 transition-colors">The Collection</h2>
-              <p className="text-brand-dark/60 dark:text-brand-cream/60 font-lato max-w-lg transition-colors text-lg">
-                Curated styles that embody luxury and precision. Discover your next look.
-              </p>
-            </div>
-            <Link href="/services" className="hidden md:block text-brand-dark dark:text-brand-cream border-b border-brand-gold pb-1 hover:text-brand-gold transition-colors uppercase text-sm tracking-widest font-lato">
-              View Full Menu
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {featured.map((style, index) => (
-              <motion.div 
-                key={style.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="group relative" 
-              >
-                {/* Image Wrapper (Remains clickable for modal) */}
-                <div 
-                    className="relative h-[450px] w-full overflow-hidden shadow-2xl dark:shadow-none cursor-pointer border border-brand-charcoal/10 dark:border-brand-cream/10"
-                    onClick={() => setSelectedImage(style)}
-                >
-                  <Image 
-                    src={style.imageUrl} 
-                    alt={style.name} 
-                    fill 
-                    className="object-cover transition-transform duration-1000 ease-in-out group-hover:scale-105"
-                  />
-                  {/* Hover Overlay: Click to Enlarge Icon */}
-                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <div className="bg-brand-gold/90 p-4 rounded-full shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#121212" className="w-6 h-6">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-                        </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card Text Info & CTA Wrapper */}
-                <div className="pt-8">
-                    <div className="flex justify-between items-end pb-4">
-                        <div>
-                            <h3 className="text-3xl font-playfair text-brand-dark dark:text-brand-cream group-hover:text-brand-gold transition-colors">{style.name}</h3>
-                            <p className="text-sm text-brand-charcoal dark:text-brand-cream/70 mt-2 max-w-[250px] font-lato transition-colors">{style.description || "Premium protective styling."}</p>
-                        </div>
-                        <span className="text-2xl font-medium text-brand-gold transition-colors">₦{style.price?.toLocaleString()}</span>
-                    </div>
-
-                    {/* NEW: Dedicated WhatsApp CTA Button - Using the primary button component */}
-                    <a 
-                        href={getWhatsAppUrl(style.name, style.price)}
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="btn-primary btn-primary-base w-full group mt-4" 
-                    >
-                        <span className="btn-primary-wipe"></span>
-                        <span className="btn-primary-content flex items-center gap-2 justify-center text-sm">
-                            <Phone size={14}/> Book This Look Now
-                        </span>
-                    </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-           {/* View Full Menu Link */}
-           <div className="mt-20 text-center">
-            <Link href="/services" 
-                className="
-                  text-brand-dark dark:text-brand-cream 
-                  uppercase text-lg tracking-[0.2em] 
-                  border-b-2 border-brand-gold 
-                  pb-1 hover:text-brand-gold transition-colors font-bold font-lato
-                "
-            >
-               View All Styles
-            </Link>
-           </div>
-        </div>
-      </section>
-
-      {/* --- 5. IMAGE MODAL (FULL SCREEN) - UPGRADED STYLING & FIXED ERROR --- */}
+      {/* --- 5. IMAGE MODAL (FULL SCREEN) - CORRECTED & UPGRADED --- */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div 
@@ -333,7 +330,7 @@ export default function Home() {
             className="fixed inset-0 z-[100] bg-brand-dark/95 backdrop-blur-md flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
-            {/* Close Button - USES LUCIDE X NOW */}
+            {/* Close Button - Now correctly using X icon */}
             <button className="absolute top-6 right-6 text-brand-cream hover:text-brand-gold transition-colors z-50 p-2">
                 <X size={40} strokeWidth={1.5} />
             </button>
@@ -358,16 +355,16 @@ export default function Home() {
               
               {/* Modal Details */}
               <div className="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-center bg-brand-cream dark:bg-brand-dark transition-colors">
-                <h3 className="text-5xl font-playfair text-brand-dark dark:text-brand-cream mb-2 transition-colors">{selectedImage.name}</h3>
+                <h3 className="text-5xl font-playfair text-brand-dark dark:text-brand-cream mb-2">{selectedImage.name}</h3>
                 <div className="w-16 h-[3px] bg-brand-gold mb-6"></div>
                 
-                <p className="text-brand-dark/80 dark:text-brand-cream/80 mb-8 leading-relaxed text-base font-lato transition-colors">
-                    {selectedImage.description || "Handcrafted with precision and care to ensure longevity and natural beauty. This style includes wash, prep, and finishing oil treatment."}
+                <p className="text-brand-dark/80 dark:text-brand-cream/80 mb-8 leading-relaxed text-base font-lato">
+                    Handcrafted with **Artisan Precision**. This exclusive style includes a personalized consultation, wash, prep, and our signature finishing oil treatment.
                 </p>
                 
                 <div className="flex items-baseline gap-2 mb-10">
                     <span className="text-sm text-brand-charcoal uppercase tracking-wide dark:text-brand-cream/70 font-lato">Starting at</span>
-                    <span className="text-4xl font-playfair font-medium text-brand-gold transition-colors">₦{selectedImage.price?.toLocaleString()}</span>
+                    <span className="text-4xl font-playfair font-medium text-brand-gold">₦{selectedImage.price?.toLocaleString()}</span>
                 </div>
 
                 {/* MODAL CTA: WhatsApp Link - Custom Message */}
@@ -375,7 +372,7 @@ export default function Home() {
                     href={getWhatsAppUrl(selectedImage.name, selectedImage.price)} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="btn-primary btn-primary-base w-full group" // ADDED group class here
+                    className="btn-primary btn-primary-base w-full group" 
                 >
                     <span className="btn-primary-wipe"></span>
                     <span className="btn-primary-content flex items-center gap-2 justify-center text-sm">
@@ -388,12 +385,23 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* --- 6. TEXTURE/DIVIDER SECTION - MORE IMPACTFUL --- */}
-      <section className="py-24 bg-brand-dark text-brand-cream text-center px-4 transition-colors">
+      {/* --- 6. FINAL CTA BANNER --- */}
+      <section className="py-24 bg-brand-dark text-brand-cream text-center px-4">
         <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-6xl font-playfair leading-tight italic text-gradient-gold">
-                "Beauty is an attitude. We just provide the crown."
+            <h2 className="text-4xl md:text-6xl font-playfair leading-tight italic text-gradient-gold mb-8">
+                Ready to define your signature style?
             </h2>
+             <a 
+                href={`https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn-primary btn-primary-base w-fit mx-auto group mt-8" 
+            >
+                 <span className="btn-primary-wipe"></span>
+                <span className="btn-primary-content flex items-center gap-2 text-sm">
+                    <Sparkles size={16}/> Start Your Transformation
+                </span>
+            </a>
         </div>
       </section>
 
