@@ -1,12 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-// ... (Firebase imports remain the same) ...
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Phone, CheckCircle, Diamond, Sparkles, Star } from "lucide-react";
+import { Phone, CheckCircle, Diamond, Sparkles, Star, X } from "lucide-react"; // Import X for the modal close button
 
 // VVIP Contact Details (Used for immediate CTAs)
 const WHATSAPP_NUMBER = "+2349021280216";
@@ -147,7 +146,7 @@ export default function Home() {
                 href={`https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn-primary btn-primary-base w-fit" // w-fit ensures it only takes necessary width
+                className="btn-primary btn-primary-base w-fit group" // Added group here for button effects
               >
                  <span className="btn-primary-wipe"></span>
                 <span className="btn-primary-content flex items-center gap-2 text-sm">
