@@ -1,35 +1,42 @@
 import Link from 'next/link';
-import { useTheme } from '../context/ThemeContext'; // Assuming this context is still used
+
+// NOTE: useTheme is typically not needed if colors are handled via Tailwind's dark: utility classes
+// import { useTheme } from '../context/ThemeContext'; 
 
 /**
- * A sophisticated logo featuring a brand icon and the elegant signature text.
- * Uses the custom 'signature' font and VVIP brand colors.
+ * A sophisticated logo featuring a custom brand icon and the elegant signature text.
+ * Uses the custom 'signature' font and VVIP brand colors from tailwind.config.js.
  */
 const Logo = ({ className = '' }) => {
 
-  // Define colors based on the Tailwind config and theme mode for high contrast
+  // Brand color variables for clarity inside the SVG
   const iconFillColor = '#C5A059'; // brand-gold
   const textColor = 'text-brand-dark dark:text-brand-cream'; // Dark text in light mode, Cream in dark mode
   const textHoverAccent = 'hover:text-logo-accent dark:hover:text-logo-accent'; // Gold accent on hover
 
   return (
+    // The logo group itself
     <div className={`flex items-center ${className}`}>
-      <Link href="/" className="group flex items-center space-x-2 transition-opacity duration-300 hover:opacity-80">
+      <Link 
+        href="/" 
+        className="group flex items-center space-x-2 transition-opacity duration-300 hover:opacity-90"
+      >
         
-        {/* 1. Brand Icon (Stylized 'H' inside a flowing circle) */}
-        <div className="w-8 h-8 sm:w-10 sm:h-10">
+        {/* 1. Brand Icon (Stylized 'H' inside a subtle circle/flow, using SVG) */}
+        <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 100 100"
             fill="none"
           >
-            {/* Outer Circle/Flow Shape in Gold */}
-            <circle cx="50" cy="50" r="48" stroke={iconFillColor} strokeWidth="4" />
+            {/* Outer Circle/Flow Shape in Gold for premium framing */}
+            <circle cx="50" cy="50" r="48" stroke={iconFillColor} strokeWidth="4" fill="none" />
             
-            {/* Stylized 'H' Initial in Gold */}
+            {/* Stylized 'H' Initial in Gold, using the Playfair font for visual harmony */}
             <text 
                 x="50" 
                 y="65" 
+                // Ensure the font used here matches your Playfair definition, though rendering in SVG is basic
                 fontFamily="Playfair Display, serif" 
                 fontSize="45" 
                 fontWeight="bold" 
