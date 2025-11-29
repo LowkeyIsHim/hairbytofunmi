@@ -1,3 +1,5 @@
+// src/context/AuthContext.js (UPGRADED)
+
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -18,21 +20,25 @@ export const AuthContextProvider = ({ children }) => {
       } else {
         setUser(null);
       }
-      setLoading(false);
+      setLoading(false); // Set loading to false once state is determined
     });
 
     return () => unsubscribe();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, loading }}>
-      {loading ? (
-        <div className="h-screen w-full flex items-center justify-center bg-brand-50">
-           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-brand-500"></div>
+  // Show a simple loading spinner during the initial Firebase check.
+  if (loading) {
+    return (
+        <div className="h-screen w-full flex items-center justify-center bg-brand-cream dark:bg-brand-dark">
+           <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-brand-gold"></div>
         </div>
-      ) : (
-        children
-      )}
+    );
+  }
+
+  return (
+    // Pass user and loading state to children
+    <AuthContext.Provider value={{ user, loading }}>
+      {children}
     </AuthContext.Provider>
   );
 };
