@@ -5,35 +5,36 @@ import Link from 'next/link';
  * Uses the custom 'signature' font and VVIP brand colors from tailwind.config.js.
  */
 const Logo = ({ className = '' }) => {
-  const iconFillColor = '#A37A4B'; // brand-gold
-  const textColor = 'text-brand-dark dark:text-brand-cream'; 
-  const textHoverAccent = 'hover:text-logo-accent dark:hover:text-logo-accent'; 
+
+  // Brand color variables for clarity inside the SVG
+  const iconFillColor = '#C5A059'; // brand-gold
+  const textColor = 'text-brand-dark dark:text-brand-cream'; // Dark text in light mode, Cream in dark mode
+  const textHoverAccent = 'hover:text-logo-accent dark:hover:text-logo-accent'; // Gold accent on hover
 
   return (
+    // The logo group itself
     <div className={`flex items-center ${className}`}>
       <Link 
         href="/" 
         className="group flex items-center space-x-2 transition-opacity duration-300 hover:opacity-90"
-        aria-label="Hair by Tofunmi Home"
       >
         
-        {/* 1. Brand Icon (Stylized 'H' Initial in a square frame) */}
-        <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 relative">
+        {/* 1. Brand Icon (Stylized 'H' inside a subtle circle/flow, using SVG) */}
+        <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 100 100"
             fill="none"
-            className="w-full h-full"
           >
-            {/* Elegant Square/Frame in Gold */}
-            <rect x="0" y="0" width="100" height="100" stroke={iconFillColor} strokeWidth="6" fill="none" />
+            {/* Outer Circle/Flow Shape in Gold for premium framing */}
+            <circle cx="50" cy="50" r="48" stroke={iconFillColor} strokeWidth="4" fill="none" />
             
-            {/* Stylized 'H' Initial */}
+            {/* Stylized 'H' Initial in Gold, using the Playfair font for visual harmony */}
             <text 
                 x="50" 
-                y="68" // Adjusted y-position for better centering
-                fontFamily="serif" // General serif for compatibility
-                fontSize="60" 
+                y="65" 
+                fontFamily="Playfair Display, serif" 
+                fontSize="45" 
                 fontWeight="bold" 
                 fill={iconFillColor}
                 textAnchor="middle" 
@@ -45,7 +46,7 @@ const Logo = ({ className = '' }) => {
           </svg>
         </div>
 
-        {/* 2. Brand Signature Text */}
+        {/* 2. Brand Signature Text - Font ensures elegance */}
         <span 
           className={`
             font-signature 
