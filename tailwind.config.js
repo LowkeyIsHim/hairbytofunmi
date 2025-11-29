@@ -10,14 +10,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // --- VVIP Luxury Palette (Original) ---
+        // --- VVIP Luxury Palette (Existing) ---
         'brand-dark': '#121212',       // Deep Charcoal / Near Black
         'brand-cream': '#FAF9F6',      // Off-White / Ivory Base
         'brand-gold': '#C5A059',       // Champagne/Antique Gold Accent
         'brand-charcoal': '#444444',   // Muted Dark Text/Accent
         // --- Added for Logo/Signature Clarity ---
-        'logo-primary': '#121212',     // Alias for brand-dark
-        'logo-accent': '#C5A059',      // Alias for brand-gold
+        'logo-primary': '#121212',     // Primary text color (Dark Mode will handle the cream switch)
+        'logo-accent': '#C5A059',      // Gold accent for icon/hover
       },
       // You can also extend typography styles here if needed later
       fontFamily: {
