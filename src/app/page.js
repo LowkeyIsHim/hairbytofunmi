@@ -1,3 +1,5 @@
+// src/app/page.js
+
 "use client";
 import { useEffect, useState } from "react";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
@@ -5,12 +7,20 @@ import { db } from "@/lib/firebase";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Phone, CheckCircle, Diamond, Sparkles, Star } from "lucide-react"; // Added icons for new sections
+import { Phone, CheckCircle, Diamond, Sparkles, Star } from "lucide-react";
 
 // VVIP Contact Details (Used for immediate CTAs)
 const WHATSAPP_NUMBER = "+2349021280216";
 
-// Placeholder data with enhanced descriptions
+// --- Function to generate the custom WhatsApp URL ---
+const getWhatsAppUrl = (styleName, price) => {
+    const message = encodeURIComponent(
+        `Hello HairByTofunmi, I would like to book an appointment for the ${styleName} style, priced at ₦${price.toLocaleString()}. Please let me know your next availability. Thank you!`
+    );
+    return `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}?text=${message}`;
+};
+
+// Placeholder data with enhanced descriptions (remains the same)
 const placeholderStyles = [
   { 
     id: 'p1', 
@@ -41,7 +51,6 @@ const commitmentPoints = [
   { icon: Sparkles, title: "Exclusive Experience", description: "Private appointments and a tailored styling consultation." },
 ];
 
-// Placeholder Testimonial Data
 const testimonials = [
     { text: "The bespoke knotless braids were flawless. Truly the most comfortable and longest-lasting style I've ever had.", author: "A. Williams" },
     { text: "Tofunmi doesn't just do hair; she creates art. The Parisian curls turned heads everywhere I went!", author: "K. Eze" },
@@ -55,6 +64,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchFeatured = async () => {
+      // ... (firebase fetch logic remains the same) ...
       try {
         const q = query(collection(db, "styles"), where("featured", "==", true), limit(3));
         const snapshot = await getDocs(q);
@@ -68,10 +78,11 @@ export default function Home() {
     fetchFeatured();
   }, []);
 
+  // --- Component return starts here ---
   return (
     <div className="w-full bg-brand-cream dark:bg-brand-dark transition-colors duration-500">
       
-      {/* --- 1. HERO SECTION: Bolder Typography and WhatsApp CTA --- */}
+      {/* --- 1. HERO SECTION --- (remains the same) */}
       <section className="relative h-screen w-full overflow-hidden flex items-center">
         {/* Parallax Background Image */}
         <div className="absolute inset-0 z-0">
@@ -105,7 +116,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="text-7xl md:text-9xl text-brand-dark dark:text-brand-cream leading-[0.9] mb-8 transition-colors" // BOLDER FONT SIZE
+              className="text-7xl md:text-9xl text-brand-dark dark:text-brand-cream leading-[0.9] mb-8 transition-colors"
             >
               Define Your <br />
               <span className="italic font-serif text-gradient-gold">Elegance.</span>
@@ -115,7 +126,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.4 }}
-              className="text-xl text-brand-dark/80 dark:text-brand-cream/80 mb-12 max-w-lg font-light leading-relaxed transition-colors" // SLIGHTLY LARGER TEXT
+              className="text-xl text-brand-dark/80 dark:text-brand-cream/80 mb-12 max-w-lg font-light leading-relaxed transition-colors"
             >
               Experience bespoke styling where precision meets luxury. 
               We don't just do hair; **we craft your crown.**
@@ -158,7 +169,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- 2. NEW SECTION: WHY CHOOSE US (VVIP COMMITMENT) --- */}
+      {/* --- 2. NEW SECTION: WHY CHOOSE US (VVIP COMMITMENT) --- (remains the same) */}
       <section className="py-24 px-6 bg-brand-cream dark:bg-brand-dark transition-colors">
         <div className="container mx-auto">
             <h2 className="text-center text-3xl font-serif text-brand-dark dark:text-brand-cream mb-16">
@@ -183,7 +194,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- 3. NEW SECTION: TESTIMONIAL SLIDER (Simple Placeholder) --- */}
+      {/* --- 3. NEW SECTION: TESTIMONIAL SLIDER --- (remains the same) */}
       <section className="py-24 px-6 bg-brand-dark dark:bg-brand-dark transition-colors">
         <div className="container mx-auto text-center">
             <div className="flex items-center justify-center mb-4">
@@ -194,9 +205,8 @@ export default function Home() {
             <h2 className="text-2xl uppercase tracking-widest text-brand-gold mb-12">Client Impressions</h2>
             
             <AnimatePresence mode="wait">
-                {/* Simplified testimonial display for now. This should be a slider component later. */}
                 <motion.blockquote
-                    key={0} // Using a fixed key since it's a simple placeholder
+                    key={0}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
@@ -211,7 +221,6 @@ export default function Home() {
                     </footer>
                 </motion.blockquote>
             </AnimatePresence>
-             {/* Link to external reviews or full testimonial page */}
              <div className="mt-16">
                 <Link href="/reviews" className="text-brand-gold border-b border-brand-gold pb-1 hover:text-brand-cream transition-colors uppercase text-sm tracking-widest">
                     Read All 5-Star Reviews
@@ -221,7 +230,7 @@ export default function Home() {
       </section>
 
 
-      {/* --- FEATURED COLLECTION ... (rest of the file remains the same) --- */}
+      {/* --- 4. FEATURED COLLECTION: UPGRADED CARDS WITH WHATSAPP CTA --- */}
       <section className="py-32 px-6 bg-brand-cream dark:bg-brand-dark transition-colors">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16">
@@ -244,20 +253,22 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="group cursor-pointer"
-                onClick={() => setSelectedImage(style)}
+                className="group relative" // Added relative for position
               >
-                {/* Image Wrapper */}
-                <div className="relative h-[500px] w-full overflow-hidden mb-6 shadow-xl dark:shadow-none">
+                {/* Image Wrapper (Remains clickable for modal) */}
+                <div 
+                    className="relative h-[500px] w-full overflow-hidden shadow-xl dark:shadow-none cursor-pointer"
+                    onClick={() => setSelectedImage(style)}
+                >
                   <Image 
                     src={style.imageUrl} 
                     alt={style.name} 
                     fill 
-                    className="object-cover transition-transform duration-1000 ease-in-out group-hover:scale-110"
+                    className="object-cover transition-transform duration-1000 ease-in-out group-hover:scale-105" // Subtler hover scale
                   />
-                  {/* Hover Overlay */}
+                  {/* Hover Overlay: Click to Enlarge Icon */}
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <div className="bg-white/90 dark:bg-brand-dark/90 backdrop-blur-sm p-4 rounded-full">
+                    <div className="bg-brand-cream/90 dark:bg-brand-dark/90 backdrop-blur-sm p-4 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-brand-dark dark:text-brand-cream">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
                         </svg>
@@ -265,13 +276,28 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Card Text Info */}
-                <div className="flex justify-between items-start border-t border-brand-dark/10 dark:border-brand-cream/10 pt-4 transition-colors">
-                  <div>
-                    <h3 className="text-2xl font-serif text-brand-dark dark:text-brand-cream group-hover:text-brand-gold transition-colors">{style.name}</h3>
-                    <p className="text-sm text-brand-dark/60 dark:text-brand-cream/60 mt-1 max-w-[250px] transition-colors">{style.description || "Premium protective styling."}</p>
-                  </div>
-                  <span className="text-lg font-medium text-brand-dark dark:text-brand-cream transition-colors">₦{style.price?.toLocaleString()}</span>
+                {/* Card Text Info & CTA Wrapper */}
+                <div className="pt-6">
+                    <div className="flex justify-between items-start border-b border-brand-gold/50 dark:border-brand-gold/50 pb-4 mb-4"> {/* Separator moved */}
+                        <div>
+                            <h3 className="text-2xl font-serif text-brand-dark dark:text-brand-cream group-hover:text-brand-gold transition-colors">{style.name}</h3>
+                            <p className="text-sm text-brand-dark/60 dark:text-brand-cream/60 mt-1 max-w-[250px] transition-colors">{style.description || "Premium protective styling."}</p>
+                        </div>
+                        <span className="text-xl font-medium text-brand-dark dark:text-brand-cream transition-colors">₦{style.price?.toLocaleString()}</span>
+                    </div>
+
+                    {/* NEW: Dedicated WhatsApp CTA Button */}
+                    <a 
+                        href={getWhatsAppUrl(style.name, style.price)}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="w-full inline-flex justify-center items-center gap-2 
+                                  bg-brand-gold text-brand-dark 
+                                  uppercase tracking-[0.2em] text-xs font-bold 
+                                  py-3 hover:bg-brand-dark hover:text-brand-cream transition-colors duration-300"
+                    >
+                        <Phone size={14}/> Book This Look Now
+                    </a>
                 </div>
               </motion.div>
             ))}
@@ -285,9 +311,74 @@ export default function Home() {
            </div>
         </div>
       </section>
-      {/* --- IMAGE MODAL (FULL SCREEN) --- (remains the same) */}
 
-      {/* --- TEXTURE/DIVIDER SECTION (High Contrast) --- */}
+      {/* --- 5. IMAGE MODAL (FULL SCREEN) --- (remains the same) */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-brand-dark/95 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            {/* Close Button */}
+            <button className="absolute top-6 right-6 text-white hover:text-brand-gold transition-colors z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-5xl w-full h-[80vh] flex flex-col md:flex-row bg-brand-cream dark:bg-brand-dark rounded-sm overflow-hidden shadow-2xl transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Image (remains the same) */}
+              <div className="relative w-full md:w-2/3 h-2/3 md:h-full">
+                <Image 
+                    src={selectedImage.imageUrl} 
+                    alt={selectedImage.name} 
+                    fill 
+                    className="object-cover"
+                />
+              </div>
+              
+              {/* Modal Details */}
+              <div className="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-center bg-brand-cream dark:bg-brand-dark transition-colors">
+                <h3 className="text-4xl font-serif text-brand-dark dark:text-brand-cream mb-2 transition-colors">{selectedImage.name}</h3>
+                <div className="w-12 h-[2px] bg-brand-gold mb-6"></div>
+                
+                <p className="text-brand-dark/80 dark:text-brand-cream/80 mb-8 leading-relaxed transition-colors">
+                    {selectedImage.description || "Handcrafted with precision and care to ensure longevity and natural beauty. This style includes wash, prep, and finishing oil treatment."}
+                </p>
+                
+                <div className="flex items-baseline gap-2 mb-10">
+                    <span className="text-sm text-gray-500 uppercase tracking-wide dark:text-gray-400">Starting at</span>
+                    <span className="text-3xl font-medium text-brand-dark dark:text-brand-cream transition-colors">₦{selectedImage.price?.toLocaleString()}</span>
+                </div>
+
+                {/* MODAL CTA: WhatsApp Link - Custom Message */}
+                <a 
+                    href={getWhatsAppUrl(selectedImage.name, selectedImage.price)} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn-primary text-center group !bg-brand-dark dark:!bg-brand-gold"
+                >
+                    <span className="relative z-10 uppercase text-xs tracking-[0.2em] text-brand-cream dark:text-brand-dark">
+                        Book This Look Now
+                    </span>
+                    <div className="absolute inset-0 h-full w-full scale-0 rounded-sm transition-all duration-300 group-hover:scale-100 bg-brand-gold dark:bg-brand-dark/80"></div>
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* --- 6. TEXTURE/DIVIDER SECTION (remains the same) --- */}
       <section className="py-20 bg-brand-dark text-brand-cream dark:bg-brand-cream dark:text-brand-dark text-center px-4 transition-colors">
         <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-serif leading-tight italic">
