@@ -1,3 +1,5 @@
+// src/app/page.js
+
 "use client";
 import { useEffect, useState } from "react";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
@@ -5,7 +7,8 @@ import { db } from "@/lib/firebase";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Phone, CheckCircle, Diamond, Sparkles, Star, X } from "lucide-react"; // Import X for the modal close button
+// ADDED X HERE TO FIX THE MODAL ERROR
+import { Phone, CheckCircle, Diamond, Sparkles, Star, X } from "lucide-react"; 
 
 // VVIP Contact Details (Used for immediate CTAs)
 const WHATSAPP_NUMBER = "+2349021280216";
@@ -15,7 +18,7 @@ const getWhatsAppUrl = (styleName, price) => {
     const message = encodeURIComponent(
         `Hello HairByTofunmi, I would like to book an appointment for the ${styleName} style, priced at ₦${price.toLocaleString()}. Please let me know your next availability. Thank you!`
     );
-    return `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}?text=${message}`;
+    return `https://https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}?text=${message}`;
 };
 
 // Placeholder data (remains the same)
@@ -89,7 +92,6 @@ export default function Home() {
             alt="Luxury Hair Styling" 
             fill 
             priority
-            // Apply the 'slow-zoom' animation defined in tailwind.config.js
             className="object-cover opacity-80 dark:opacity-70 transition-opacity animate-slow-zoom" 
           />
           {/* Cinematic Gradient Overlay - Stronger Dark Mode Transition */}
@@ -134,19 +136,19 @@ export default function Home() {
               **We don't just do hair; we craft your crown.**
             </motion.p>
 
-            {/* CTAs - Using the new globally defined button style */}
+            {/* CTAs - CORRECTED TO USE GLOBAL BUTTON STYLES */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-6 items-start sm:items-center group" // Add group for button animation
+              className="flex flex-col sm:flex-row gap-6 items-start sm:items-center"
             >
               {/* PRIMARY CTA: WhatsApp Link - Using .btn-primary */}
               <a 
                 href={`https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn-primary btn-primary-base w-fit group" // Added group here for button effects
+                className="btn-primary btn-primary-base w-fit group" // ADDED group class here
               >
                  <span className="btn-primary-wipe"></span>
                 <span className="btn-primary-content flex items-center gap-2 text-sm">
@@ -161,7 +163,7 @@ export default function Home() {
                       uppercase text-sm tracking-widest 
                       border-b border-brand-charcoal/50 dark:border-brand-cream/50
                       pb-1 hover:text-brand-gold hover:border-brand-gold transition-colors
-                      py-2 sm:py-0
+                      py-2 sm:py-0 font-lato
                     "
               >
                 View Service Menu
@@ -185,12 +187,11 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: index * 0.15 }}
-                        // Added vertical padding to make it a distinct block
                         className="py-12 px-8 flex flex-col items-center text-center transition-colors" 
                     >
                         <point.icon className="h-10 w-10 text-brand-gold mx-auto mb-6" strokeWidth={1.5} />
                         <h3 className="text-xl font-playfair text-brand-dark dark:text-brand-cream mb-3">{point.title}</h3>
-                        <p className="text-sm text-brand-charcoal dark:text-brand-cream/70 leading-relaxed max-w-xs">{point.description}</p>
+                        <p className="text-sm text-brand-charcoal dark:text-brand-cream/70 leading-relaxed max-w-xs font-lato">{point.description}</p>
                     </motion.div>
                 ))}
             </div>
@@ -283,12 +284,9 @@ export default function Home() {
                 <div className="pt-8">
                     <div className="flex justify-between items-end pb-4">
                         <div>
-                            {/* Use Playfair for Name */}
                             <h3 className="text-3xl font-playfair text-brand-dark dark:text-brand-cream group-hover:text-brand-gold transition-colors">{style.name}</h3>
-                            {/* Use Lato for Description */}
                             <p className="text-sm text-brand-charcoal dark:text-brand-cream/70 mt-2 max-w-[250px] font-lato transition-colors">{style.description || "Premium protective styling."}</p>
                         </div>
-                        {/* Price is prominent */}
                         <span className="text-2xl font-medium text-brand-gold transition-colors">₦{style.price?.toLocaleString()}</span>
                     </div>
 
@@ -297,7 +295,7 @@ export default function Home() {
                         href={getWhatsAppUrl(style.name, style.price)}
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="btn-primary btn-primary-base w-full group mt-4" // Added group class for CSS transition
+                        className="btn-primary btn-primary-base w-full group mt-4" 
                     >
                         <span className="btn-primary-wipe"></span>
                         <span className="btn-primary-content flex items-center gap-2 justify-center text-sm">
@@ -325,7 +323,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- 5. IMAGE MODAL (FULL SCREEN) - UPGRADED STYLING --- */}
+      {/* --- 5. IMAGE MODAL (FULL SCREEN) - UPGRADED STYLING & FIXED ERROR --- */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div 
@@ -335,7 +333,7 @@ export default function Home() {
             className="fixed inset-0 z-[100] bg-brand-dark/95 backdrop-blur-md flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
-            {/* Close Button */}
+            {/* Close Button - USES LUCIDE X NOW */}
             <button className="absolute top-6 right-6 text-brand-cream hover:text-brand-gold transition-colors z-50 p-2">
                 <X size={40} strokeWidth={1.5} />
             </button>
@@ -377,7 +375,7 @@ export default function Home() {
                     href={getWhatsAppUrl(selectedImage.name, selectedImage.price)} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="btn-primary btn-primary-base w-full group" // Use global button style
+                    className="btn-primary btn-primary-base w-full group" // ADDED group class here
                 >
                     <span className="btn-primary-wipe"></span>
                     <span className="btn-primary-content flex items-center gap-2 justify-center text-sm">
