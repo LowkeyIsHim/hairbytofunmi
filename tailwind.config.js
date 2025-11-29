@@ -21,7 +21,7 @@ module.exports = {
         'brand-dark': '#121212',       // Deep Charcoal / Near Black (Base for Dark Mode BG)
         'brand-cream': '#FAF9F6',      // Off-White / Ivory Base (Base for Light Mode BG)
         
-        // --- Primary Accent Gold (Now a Scale) ---
+        // -Primary Accent Gold (Now a Scale) ---
         'brand-gold': {
           DEFAULT: '#C5A059',          // Original Champagne/Antique Gold Accent
           'light': '#D6C097',          
