@@ -1,7 +1,5 @@
-"use client"; // Must be a client component if using useTheme hook
+// src/components/Logo.js
 import Link from 'next/link';
-// Re-introducing useTheme for structure compatibility, even if not directly used for styling.
-import { useTheme } from '../context/ThemeContext'; 
 
 /**
  * A sophisticated logo featuring a custom brand icon and the elegant signature text.
@@ -11,11 +9,10 @@ const Logo = ({ className = '' }) => {
 
   // Brand color variables for clarity inside the SVG
   const iconFillColor = '#C5A059'; // brand-gold
-  const textColor = 'text-brand-dark dark:text-brand-cream'; // Dark text in light mode, Cream in dark mode
-  const textHoverAccent = 'hover:text-logo-accent dark:hover:text-logo-accent'; // Gold accent on hover
+  const textColor = 'text-brand-dark dark:text-brand-cream'; 
+  const textHoverAccent = 'hover:text-logo-accent dark:hover:text-logo-accent'; 
 
   return (
-    // The logo group itself
     <div className={`flex items-center ${className}`}>
       <Link 
         href="/" 
@@ -32,7 +29,7 @@ const Logo = ({ className = '' }) => {
             {/* Outer Circle/Flow Shape in Gold for premium framing */}
             <circle cx="50" cy="50" r="48" stroke={iconFillColor} strokeWidth="4" fill="none" />
             
-            {/* Stylized 'H' Initial in Gold, using the Playfair font for visual harmony */}
+            {/* Stylized 'H' Initial in Gold */}
             <text 
                 x="50" 
                 y="65" 
