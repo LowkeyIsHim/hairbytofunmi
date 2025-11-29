@@ -1,7 +1,7 @@
+"use client"; // Must be a client component if using useTheme hook
 import Link from 'next/link';
-
-// NOTE: useTheme is typically not needed if colors are handled via Tailwind's dark: utility classes
-// import { useTheme } from '../context/ThemeContext'; 
+// Re-introducing useTheme for structure compatibility, even if not directly used for styling.
+import { useTheme } from '../context/ThemeContext'; 
 
 /**
  * A sophisticated logo featuring a custom brand icon and the elegant signature text.
@@ -36,7 +36,6 @@ const Logo = ({ className = '' }) => {
             <text 
                 x="50" 
                 y="65" 
-                // Ensure the font used here matches your Playfair definition, though rendering in SVG is basic
                 fontFamily="Playfair Display, serif" 
                 fontSize="45" 
                 fontWeight="bold" 
