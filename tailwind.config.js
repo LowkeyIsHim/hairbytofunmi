@@ -1,30 +1,27 @@
-// tailwind.config.js (NEW LUXURY PALETTE)
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class', 
   content: [
-  "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        // --- NEW RICH SAPPHIRE & GOLD LUXURY PALETTE ---
-        'brand-primary': '#0D0D1F',     // Deep Sapphire / Near Black for background
-        'brand-secondary': '#A58B5C',   // Rich, Antique Gold for accents
-        'brand-text': '#F7F4EB',        // Off-White/Ivory for readability
-        'brand-muted': '#7B7B8F',       // Muted Grey-Blue for subtext/borders
-        
-        // Aliases for Logo (Uses new palette)
-        'logo-primary': '#0D0D1F',
-        'logo-accent': '#A58B5C',
+        // --- VVIP Luxury Palette 2.0: High Contrast and Metallic ---
+        'brand-dark': '#0A0A0A',       // True Deep Black
+        'brand-cream': '#F8F4EF',      // Luxurious Off-White Ivory
+        'brand-gold': '#A37A4B',       // Rich, Metallic Antique Gold
+        'brand-charcoal': '#333333',   // Muted Dark Text/Accent
+        // Aliases for clarity
+        'logo-primary': '#0A0A0A',
+        'logo-accent': '#A37A4B',      
       },
       fontFamily: {
         playfair: ['var(--font-playfair)'],
         lato: ['var(--font-lato)'],
-        // Signature remains Playfair
+        // Signature uses Playfair for an elegant script-like feel
         signature: ['var(--font-playfair)', 'serif'], 
       },
       // Optional: Add slow zoom for Hero Image parallax effect
