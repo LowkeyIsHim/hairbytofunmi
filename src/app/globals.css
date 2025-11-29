@@ -169,6 +169,7 @@ a:hover {
 
 /* Defines a generic card/surface with subtle background and shadow */
 .card-surface {
-    /* FIX 2 APPLIED: Use the correctly generated light/dark utilities */
+    /* FIX: Use the correctly generated utilities. 
+       surface { subtle-light, subtle-dark } generates bg-surface-subtle-light/dark */
     @apply bg-surface-subtle-light dark:bg-surface-subtle-dark shadow-luxury-sm rounded-lg p-6;
 }
