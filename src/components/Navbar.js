@@ -1,4 +1,4 @@
-// src/components/Navbar.js (FIXED - Removed redundant admin check)
+// src/components/Navbar.js (FIXED & CLEANED)
 
 "use client";
 import Link from "next/link";
@@ -6,16 +6,15 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import ThemeSwitch from "./ThemeSwitch";
-import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+// Removed usePathname import and usage since LayoutWrapper handles visibility
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  // const pathname = usePathname(); <--- REMOVED
 
-  // REMOVED: if (pathname.includes('/admin')) return null; 
-  // This check is now handled by the RootLayout's LayoutWrapper.
+  // if (pathname.includes('/admin')) return null; <--- REMOVED
 
   // Handle scroll effect
   useEffect(() => {
