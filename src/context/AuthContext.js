@@ -1,13 +1,17 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, signInWithCustomToken, signInAnonymously } from "firebase/auth";
+import { 
+    onAuthStateChanged, 
+    signInWithCustomToken, // Explicitly imported
+    signInAnonymously // Explicitly imported
+} from "firebase/auth";
 import { auth, db } from "@/lib/firebase"; // Import db here
 
 const AuthContext = createContext({
   user: null,
   userId: null,
   loading: true, 
-  db: null, // CRITICAL: Added db to context definition
+  db: null,
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -23,11 +27,9 @@ export const AuthContextProvider = ({ children }) => {
     const authenticate = async () => {
         try {
             if (initialAuthToken) {
-                // Mandatory sign-in with custom token
                 await signInWithCustomToken(auth, initialAuthToken);
                 console.log("Firebase: Signed in with custom token.");
             } else {
-                // Fallback to anonymous sign-in
                 await signInAnonymously(auth);
                 console.log("Firebase: Signed in anonymously.");
             }
@@ -36,7 +38,6 @@ export const AuthContextProvider = ({ children }) => {
         }
     };
     
-    // Start authentication flow
     authenticate();
 
     // 2. Listen for Auth State Changes
@@ -64,7 +65,6 @@ export const AuthContextProvider = ({ children }) => {
   const userId = user?.uid || crypto.randomUUID();
 
   return (
-    // CRITICAL: Pass db, user, and the current loading/ready state
     <AuthContext.Provider value={{ user, userId, loading, db }}>
       {children}
     </AuthContext.Provider>
