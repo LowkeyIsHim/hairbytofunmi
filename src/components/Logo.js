@@ -1,4 +1,3 @@
-// src/components/Logo.js
 import Link from 'next/link';
 
 /**
@@ -19,14 +18,14 @@ const Logo = ({ className = '' }) => {
         className="group flex items-center space-x-2 transition-opacity duration-300 hover:opacity-90"
       >
         
-        {/* 1. Brand Icon (Stylized 'H' inside a subtle circle/flow, using SVG) */}
+        {/* 1. Brand Icon */}
         <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 100 100"
             fill="none"
           >
-            {/* Outer Circle/Flow Shape in Gold for premium framing */}
+            {/* Outer Circle/Flow Shape in Gold */}
             <circle cx="50" cy="50" r="48" stroke={iconFillColor} strokeWidth="4" fill="none" />
             
             {/* Stylized 'H' Initial in Gold */}
