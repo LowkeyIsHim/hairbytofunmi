@@ -1,9 +1,7 @@
-// src/app/layout.js (Updated)
-
 import { Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
-import { ThemeProvider } from "@/context/ThemeContext"; // <-- NEW IMPORT
+import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
@@ -28,15 +26,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // NOTE: Removed the 'dark' class application from <html> tag here.
-    // The ThemeContext component will handle applying the 'dark' class to the document root now.
     <html lang="en">
-      <body className={`min-h-screen antialiased ${playfair.variable} ${lato.variable}`}>
-        {/* Wrap everything that needs theme/auth context */}
+      {/* Apply the base font variables globally.
+        ThemeContext handles applying the 'dark' class to the root <html> tag. 
+      */}
+      <body className={`
+        min-h-screen antialiased 
+        ${playfair.variable} ${lato.variable} 
+        font-lato 
+        bg-brand-cream dark:bg-brand-dark 
+        text-brand-dark dark:text-brand-cream
+      `}>
         <ThemeProvider> 
           <AuthContextProvider>
             <Navbar />
-            <main>
+            <main className="pt-24 min-h-screen"> 
+              {/* Added pt-24 to main content to account for fixed navbar height */}
               {children}
             </main>
             <Footer />
