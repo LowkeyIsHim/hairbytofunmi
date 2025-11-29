@@ -1,66 +1,56 @@
+// src/app/admin/dashboard/page.js (FIXED)
+
 "use client";
 import { useState, useEffect } from "react";
 import { collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, serverTimestamp } from "firebase/firestore";
-import { auth } from "@/lib/firebase"; // Only keep auth for the signOut function
+import { db, auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
 import { Trash2, Plus, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Dashboard() {
-  // CRITICAL: Get db from context, alongside user and loading state
-  const { user, loading, db } = useAuth(); 
+  const { user, loading } = useAuth();
   const [styles, setStyles] = useState([]);
   const [newStyle, setNewStyle] = useState({ name: "", price: "", description: "", imageUrl: "", featured: false });
   const [isAdding, setIsAdding] = useState(false);
   const router = useRouter();
 
-  // --- SAFE AUTHENTICATION CHECK & REDIRECT ---
-  useEffect(() => {
-    // Only run this check after the loading state is resolved (auth state determined)
-    if (!loading) {
-        if (!user) {
-            // Safer redirect inside useEffect
-            console.log("Dashboard: User not authenticated. Redirecting.");
-            router.push("/admin/login");
-        }
-    }
-  }, [loading, user, router]); 
-
+  // --- EARLY AUTHENTICATION CHECK & REDIRECT ---
+  // If loading, the AuthContext provider handles the spinner.
+  // If not loading and NO user, redirect immediately using the router.
+  if (!loading && !user) {
+    // This executes during render, guaranteeing the redirect before rendering the dashboard content.
+    router.push("/admin/login");
+    return null; // Stop rendering the rest of the component
+  }
+  
+  // If loading, we also return null here, letting the AuthContext handle the loader UI
+  if (loading) {
+    return null;
+  }
+  
+  // If we reach here, loading is false AND user is present.
   
   // --- DATA SUBSCRIPTION EFFECT ---
   useEffect(() => {
-    // We only subscribe to data if the user is present AND the db object is ready
-    if (user && db) {
-        console.log("Dashboard: Subscribing to styles collection.");
-        
-        const stylesCollection = collection(db, "styles"); 
-        
-        const unsubscribe = onSnapshot(stylesCollection, (snapshot) => {
+    // We only subscribe to data if the user is present
+    if (user) {
+        const unsubscribe = onSnapshot(collection(db, "styles"), (snapshot) => {
             setStyles(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        }, (error) => {
-            console.error("Error fetching styles:", error);
-            toast.error("Failed to load styles data.");
         });
         
         // Cleanup function runs on unmount
         return () => unsubscribe();
     }
-  }, [user, db]); // Rerun when user or db (from context) changes
+    // No need to include [user, loading, router] in the dependency array
+    // because we handle the redirects and loading status outside of useEffect.
+    // The component only reaches this point if (user && !loading) is true.
+  }, [user]); 
 
-  // Display a loading indicator if authentication is still pending, or if DB is not ready
-  if (loading || !db) {
-    // AuthContext is showing the main spinner, so we can return null here.
-    return null; 
-  }
-  
-  // If we reach here, user is logged in, and db is ready.
-  
-  // Data Handlers 
+  // Data Handlers (handleAdd, handleDelete, toggleFeatured, handleLogout remain the same)
   const handleAdd = async (e) => {
     e.preventDefault();
-    if (!db) return toast.error("Database not ready.");
-
     try {
       await addDoc(collection(db, "styles"), {
         ...newStyle,
@@ -71,30 +61,25 @@ export default function Dashboard() {
       setIsAdding(false);
       toast.success("Style added successfully!");
     } catch (err) {
-      console.error(err);
       toast.error("Error adding style");
     }
   };
 
-  // NOTE: window.confirm is not supported in the sandbox. We'll use a direct action.
   const handleDelete = async (id) => {
-    if (!db) return toast.error("Database not ready.");
-    
-    // In a real app, you would use a custom modal here. For now, we perform the delete directly.
-    await deleteDoc(doc(db, "styles", id));
-    toast.success("Deleted");
+    if(confirm("Are you sure you want to delete this style?")) {
+        await deleteDoc(doc(db, "styles", id));
+        toast.success("Deleted");
+    }
   };
 
   const toggleFeatured = async (style) => {
-      if (!db) return toast.error("Database not ready.");
       await updateDoc(doc(db, "styles", style.id), {
           featured: !style.featured
       });
   };
 
-  const handleLogout = async () => {
-      await auth.signOut();
-      toast.success("Logged out successfully");
+  const handleLogout = () => {
+      auth.signOut();
       router.push("/admin/login");
   }
 
@@ -157,10 +142,8 @@ export default function Dashboard() {
                           <td className="p-4">
                               <input type="checkbox" checked={style.featured} onChange={() => toggleFeatured(style)} className="cursor-pointer text-brand-gold focus:ring-brand-gold"/>
                           </td>
-                          <td className="p-4">
-                              <button onClick={() => handleDelete(style.id)} className="text-red-500 hover:text-red-700 transition-colors" title="Delete Style">
-                                <Trash2 size={18} />
-                              </button>
+                          <td className="p-4 text-red-500 hover:text-red-700 cursor-pointer transition-colors" onClick={() => handleDelete(style.id)}>
+                              <Trash2 size={18} />
                           </td>
                       </tr>
                   ))}
@@ -171,4 +154,4 @@ export default function Dashboard() {
       </div>
     </div>
   );
-  }
+}
