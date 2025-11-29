@@ -5,23 +5,28 @@ module.exports = {
   // Ensure 'class' mode is enabled for Dark Mode switching
   darkMode: 'class', 
   content: [
-  "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        // --- VVIP Luxury Palette ---
+        // --- VVIP Luxury Palette (Existing) ---
         'brand-dark': '#121212',       // Deep Charcoal / Near Black
         'brand-cream': '#FAF9F6',      // Off-White / Ivory Base
         'brand-gold': '#C5A059',       // Champagne/Antique Gold Accent
         'brand-charcoal': '#444444',   // Muted Dark Text/Accent
+        // --- Added for Logo/Signature Clarity ---
+        'logo-primary': '#121212',     // Use brand-dark for main logo text (for contrast)
+        'logo-accent': '#C5A059',      // Use brand-gold for a subtle accent
       },
       // You can also extend typography styles here if needed later
       fontFamily: {
         playfair: ['var(--font-playfair)'],
         lato: ['var(--font-lato)'],
+        // --- Added for Signature Logo ---
+        signature: ['var(--font-playfair)', 'serif'], // Use the elegant Playfair font for the signature look
       },
       // Optional: Add slow zoom for Hero Image parallax effect
       keyframes: {
